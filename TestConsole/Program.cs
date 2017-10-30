@@ -50,8 +50,11 @@ namespace TestConsole
             static void Main(string[] args)
             {
 
-                Console.WriteLine(Properties.Resource.ResourceManager.GetString("String1"));
+                var koerper = new DatevHeader();
+                Console.WriteLine(koerper.ToString());
 
+
+                //Console.WriteLine(Properties.Resource.ResourceManager.GetString("String1"));
 
                 Console.ReadKey();
             }

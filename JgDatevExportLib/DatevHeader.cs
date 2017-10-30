@@ -14,12 +14,15 @@ namespace JgDatevExportLib
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        [JgInfo(true, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString )]
+        private EnumDatevFormat _DatevFormatKz = EnumDatevFormat.EXTF;
         /// <summary>
         /// EXTF = für Dateiformate, die von externen Programmen erstellt wurden
         /// DTVF = für DATEV reserviert
         /// </summary>
-        public EnumDatevFormat DatevFormatKz { get; set; } = EnumDatevFormat.EXTF;
+        public EnumDatevFormat DatevFormatKz { get => _DatevFormatKz; set => value = _DatevFormatKz ; }
 
+        [JgInfo(true, 999)]
         private int _Versionsnummer = 1;
         /// <summary>
         /// Versionsnummer des Headers.
@@ -30,27 +33,46 @@ namespace JgDatevExportLib
             get => _Versionsnummer;
             set
             {
-                if (Helper.KontrIntOk(ref _Versionsnummer, value, "VersionsNummer", 0, 999))
+                if (this.GetJgInfoAttribute(v => v._Versionsnummer, value))
                     NotifyPropertyChanged();
             }
         }
 
-        public EnumDatenkategorie DatenKategorie { get; set; } = EnumDatenkategorie.Buchungsstapel;
+        [JgInfo(true)]
+        private EnumDatenkategorie _DatenKategorie = EnumDatenkategorie.Buchungsstapel;
+        public EnumDatenkategorie DatenKategorie { get => _DatenKategorie; set => _DatenKategorie = value; }
 
-        public EnumFormatname FormatName { get; set; } = EnumFormatname.Buchungsstapel;   // Unterstriche umwandeln !
+        [JgInfo(true, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString)]
+        private EnumFormatname _FormatName = EnumFormatname.Buchungsstapel;
+        public EnumFormatname FormatName { get => _FormatName; set => _FormatName = value; }   // Unterstriche umwandeln !
 
+        [JgInfo(true)]
+        private EnumFormatversion _FormatVersion = EnumFormatversion.Buchungsstapel_7;
         /// <summary>
         /// Versionsnummer des Formats. Ergeben sich künftig Änderungen am Aufbau des Formats(z.B.neue Felder), kann dies über die Formatversion abwärtskompatibel verarbeitet werden.
         /// </summary>
-        public EnumFormatversion FormatVersion { get; set; } = EnumFormatversion.Buchungsstapel_7;
+        public EnumFormatversion FormatVersion { get => _FormatVersion; set => _FormatVersion = value; }
 
-        public DateTime? ErzeugtAm { get; set; } = null;
+        [JgInfo(false, Format = "yyyyMMddHHmmssfff")]
+        private DateTime? _ErzeugtAm = null;
+        public DateTime? ErzeugtAm { get => _ErzeugtAm; set => _ErzeugtAm = value; }
 
+        [JgInfo(false, 1)]
+        private int? _Importiert = null;   // Wird beim Import in Datev belegt
         /// <summary>
         /// Das Header-Feld darf nicht gefüllt werden. Wird durch den Import gesetzt.
         /// </summary>
-        public long? Importiert { get; } = null;   // Wird beim Import in Datev belegt
+        public int? Importiert
+        {
+            get => _Importiert;
+            set
+            {
+                if (this.GetJgInfoAttribute(v => v._Importiert, value))
+                    NotifyPropertyChanged();
+            }
+        }   // Wird beim Import in Datev belegt
  
+        [JgInfo(false, 2, 2)]
         private string _Herkunft = "RE";
         /// <summary>
         /// Herkunfts-Kennzeichen 2 frei wählbare Zeichen.
@@ -61,11 +83,12 @@ namespace JgDatevExportLib
             get => _Herkunft;
             set
             {
-                if (Helper.KontrStringOk(ref _Herkunft, value, "Herkunft", 1, 2))
+                if (this.GetJgInfoAttribute(v => v._Herkunft, value))
                     NotifyPropertyChanged();
             }
         }
 
+        [JgInfo(false, 25)]
         private string _ExportiertVon = "";
         /// <summary>
         /// Beim Export aus einem DATEV pro-Rechnungswesen-Programm wird der Benutzername des Users exportiert, der den Export durchgeführt hat.
@@ -75,11 +98,12 @@ namespace JgDatevExportLib
             get => _ExportiertVon;
             set
             {
-                if (Helper.KontrStringOk(ref _ExportiertVon, value, "ExportiertVon", 0, 25))
+                if (this.GetJgInfoAttribute(v => v._ExportiertVon, value))
                     NotifyPropertyChanged();
             }
         }
 
+        [JgInfo(false, 25)]
         private string _ImportiertVon = "";
         /// <summary>
         /// Wird durch den Import gesetzt.
@@ -90,54 +114,65 @@ namespace JgDatevExportLib
             get => _ImportiertVon;
             set
             {
-                if (Helper.KontrStringOk(ref _ImportiertVon, value, "ImportiertVon", 0, 25))
+                if (this.GetJgInfoAttribute(v => v._ImportiertVon, value))
                     NotifyPropertyChanged();
             }
         }
 
-        private int _BeraterNummer = 1000;
+        [JgInfo(true, 9999999)]
+        private int _BeraterNummer = 0;
         public int Beraternummer
         {
             get => _BeraterNummer;
             set
             {
-                if (Helper.KontrIntOk(ref _BeraterNummer, value, "Beraternummer", 1000, 9999999))
+                if (this.GetJgInfoAttribute(v => v._BeraterNummer, value))
                     NotifyPropertyChanged();
             }
         }
 
-        private int _MandantenNummer = 1;
+        [JgInfo(true, 99999)]
+        private int _MandantenNummer = 0;
         public int MandantenNummer
         {
             get => _MandantenNummer;
             set
             {
-                if (Helper.KontrIntOk(ref _MandantenNummer, value, "Mandantennummer", 1, 99999))
+                if (this.GetJgInfoAttribute(v => v._MandantenNummer, value))
                     NotifyPropertyChanged();
             }
         }
 
+        [JgInfo(true, Format = "yyyyMMdd")]
+        private DateTime _WjBeginn = new DateTime(DateTime.Now.Year, 1, 1);
         /// <summary>
         /// Wirtschaftsjahresbeginn
         /// </summary>
-        public DateTime WjBegin { get; set; } = new DateTime(DateTime.Now.Year, 1, 1);
+        public DateTime WjBeginn { get => _WjBeginn; set => _WjBeginn = value; }
 
+        [JgInfo(true)]
+        private EnumSachkontenNummernLaenge _SachkontenNummernLaenge = EnumSachkontenNummernLaenge.Stellen_4;
         /// <summary>
         /// Kleinste Sachkontennummernlänge = 4 ➝ Debitoren/Kreditoren dann 5 Stellen
         /// Größe Sachkontennummernlänge = 8 ➝ Debitoren/Kreditoren dann 9 Stellen
         /// </summary>
-        public EnumSachkontenNummernLaenge SachkontenNummernLaenge { get; set; } = EnumSachkontenNummernLaenge.Stellen_4;
+        public EnumSachkontenNummernLaenge SachkontenNummernLaenge { get => _SachkontenNummernLaenge; set => _SachkontenNummernLaenge = value; }
 
+        [JgInfo(true, Format = "yyyyMMdd")]
+        private DateTime _DatumVon = DateTime.Now;
         /// <summary>
         /// Datum „von“ des Buchungsstapels -> Wird vom Programm gesetzt
         /// </summary>
-        public DateTime DatumVon { get; set; } = DateTime.Now;
+        public DateTime DatumVon { get => _DatumVon; set => _DatumVon = value; }
 
+        [JgInfo(true, Format = "yyyyMMdd")]
+        private DateTime _DatumBis = DateTime.Now;
         /// <summary>
         /// Datum „bis“ des Buchungsstapels -> Wird vom Programm gesetzt
         /// </summary>
-        public DateTime DatumBis { get; set; } = DateTime.Now;
+        public DateTime DatumBis { get => _DatumBis; set => _DatumBis = value; }
 
+        [JgInfo(false, 30)]
         private string _Bezeichnung = "";
         /// <summary>
         /// Bezeichnung des Buchungsstapels
@@ -147,11 +182,12 @@ namespace JgDatevExportLib
             get => _Bezeichnung;
             set
             {
-                if (Helper.KontrStringOk(ref _Bezeichnung, value, "Bezeichnung", 0, 30))
+                if (this.GetJgInfoAttribute(v => v._Bezeichnung, value))
                     NotifyPropertyChanged();
             }
         }
 
+        [JgInfo(false, 2)]
         private string _DiktatKürzel = "";
         /// <summary>
         /// Beispiel: MM = Max Mustermann
@@ -162,45 +198,52 @@ namespace JgDatevExportLib
             get => _DiktatKürzel;
             set
             {
-                if (Helper.KontrStringOk(ref _DiktatKürzel, value, "DiktatKürzel", 0, 2))
+                if (this.GetJgInfoAttribute(v => v._DiktatKürzel, value))
                     NotifyPropertyChanged();
             }
         }
 
+        [JgInfo(false)]
+        private EnumBuchungstypHeader _BuchungsTyp = EnumBuchungstypHeader.Finanzbuchführung;
         /// <summary>
         /// Wird kein Buchungstyp angegeben, wird standardmäßig ein FIBU-Stapel erzeugt.
         /// </summary>
-        public EnumBuchungstyp Buchungstyp { get; set; } = EnumBuchungstyp.Finanzbuchführung;
+        public EnumBuchungstypHeader BuchungsTyp { get => _BuchungsTyp; set => _BuchungsTyp = value; }
 
-        public EnumRechnungszweck Rechnungszweck { get; set; } = EnumRechnungszweck.Unabhängig;
 
+        [JgInfo(false)]
+        private EnumRechnungszweck _Rechnungszweck = EnumRechnungszweck.Unabhängig;
+        public EnumRechnungszweck Rechnungszweck { get => _Rechnungszweck; set => _Rechnungszweck = value; }
+
+        [JgInfo(true)]
+        private EnumFestschreibung _Festschreibung = EnumFestschreibung.KeineFestschreibung;
         /// <summary>
         /// leer = nicht definiert; wird ab Jahreswechselversion 2016/2017 automatisch festgeschrieben
         /// </summary>
-        public EnumFestschreibung Festschreibung { get; set; } = EnumFestschreibung.KeineFestschreibung;
+        public EnumFestschreibung Festschreibung { get => _Festschreibung; set => _Festschreibung = value; }
 
-        private string _WkZ = "EUR";
+        [JgInfo(false, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString )]
+        private EnumWaehrung _WkZ = EnumWaehrung.EUR;
         /// <summary>
         /// Währungskennzeichen
         /// Beim Import wird bei Belegen ohne WKZ dieses WKZ ergänzt.
         /// </summary>
-        public string WkZ
-        {
-            get => _WkZ;
-            set
-            {
-                if (Helper.KontrStringOk(ref _WkZ, value, "WkZ", 0, 3))
-                    NotifyPropertyChanged();
-            }
-        }
+        public EnumWaehrung WkZ { get => _WkZ; set => _WkZ = value; }
 
-        public string Derivatskennzeichen { get; set; } = "";
+        [JgInfo(false)]
+        private string _Derivatskennzeichen = null;
+        public string Derivatskennzeichen { get => _Derivatskennzeichen; set => _Derivatskennzeichen = value; }
 
-        public string SKR { get; set; } = null;
+        [JgInfo(false)]
+        private string _SKR  = null;
+        public string SKR { get => _SKR; set =>_SKR = value; }
 
-        public int? BranchenlösungId { get; set; } = null;
+        [JgInfo(false)]
+        private int? _BranchenloesungId = null;
+        public int? BranchenloesungId { get => _BranchenloesungId; set => _BranchenloesungId = value; }
 
-        private string _AnwendungsInformation = "";
+        [JgInfo(false, 16)]
+        private string _AnwendungsInformation = null;
         /// <summary>
         /// Verarbeitungskennzeichen der abgebenden Anwendung
         /// </summary>
@@ -209,49 +252,44 @@ namespace JgDatevExportLib
             get => _AnwendungsInformation;
             set
             {
-                if (Helper.KontrStringOk(ref _AnwendungsInformation, value, "_AnwendungsInformation", 0, 3))
+                if (this.GetJgInfoAttribute(v => v._AnwendungsInformation, value))
                     NotifyPropertyChanged();
             }
         }
 
-        private int FormatversionInInt(string Wert)
-        {
-            return Convert.ToInt32(Wert.Substring(Wert.Length - 1));
-        }
-
         public override string ToString()
         {
-            return Helper.Konvert(DatevFormatKz.ToString()) + ";"
-                + Helper.Konvert(Versionsnummer) + ";"
-                + Helper.Konvert(DatenKategorie) + ";"
-                + Helper.Konvert(Helper.UnterstricheInWert(FormatName.ToString())) + ";"
-                + Helper.Konvert(FormatversionInInt(FormatVersion.ToString())) + ";"
-                + Helper.Konvert(ErzeugtAm, "yyyyMMddHHmmssfff") + ";"
-                + Helper.Konvert(Importiert) + ";"
-                + Helper.Konvert(Herkunft) + ";"
-                + Helper.Konvert(ExportiertVon) + ";"
-                + Helper.Konvert(ImportiertVon) + ";"
-                + Helper.Konvert(Beraternummer) + ";"
-                + Helper.Konvert(MandantenNummer) + ";"
-                + Helper.Konvert(WjBegin, "yyyMMdd") + ";"
-                + Helper.Konvert(SachkontenNummernLaenge) + ";"
-                + Helper.Konvert(DatumVon, "yyyMMdd") + ";"
-                + Helper.Konvert(DatumBis, "yyyMMdd") + ";"
-                + Helper.Konvert(Bezeichnung) + ";"
-                + Helper.Konvert(DiktatKürzel) + ";"
-                + Helper.Konvert(Buchungstyp) + ";"
-                + Helper.Konvert(Rechnungszweck) + ";"
-                + Helper.Konvert(Festschreibung) + ";"
-                + Helper.Konvert(WkZ) + ";"
-                + Helper.Konvert(null) + ";"
-                + Helper.Konvert(Derivatskennzeichen) + ";"
-                + Helper.Konvert(null) + ";"
-                + Helper.Konvert(null) + ";"
-                + Helper.Konvert(SKR) + ";"
-                + Helper.Konvert(BranchenlösungId) + ";"
-                + Helper.Konvert(null) + ";"
-                + Helper.Konvert(null) + ";"
-                + Helper.Konvert(AnwendungsInformation);
+            return this.JgDruck(v => v._DatevFormatKz) + ";"
+                + this.JgDruck(v => v._Versionsnummer) + ";"
+                + this.JgDruck(v => v._DatenKategorie) + ";"
+                + Helper.UnterstricheInWert(this.JgDruck(v => v._FormatName)) + ";"
+                + this.JgDruck(v => v._FormatVersion) + ";"
+                + this.JgDruck(v => v._ErzeugtAm) + ";"
+                + this.JgDruck(v => v._Importiert) + ";"
+                + this.JgDruck(v => v._Herkunft) + ";"
+                + this.JgDruck(v => v._ExportiertVon) + ";"
+                + this.JgDruck(v => v._ImportiertVon) + ";"
+                + this.JgDruck(v => v._BeraterNummer) + ";"
+                + this.JgDruck(v => v._MandantenNummer) + ";"
+                + this.JgDruck(v => v._WjBeginn) + ";"
+                + this.JgDruck(v => v._SachkontenNummernLaenge) + ";"
+                + this.JgDruck(v => v._DatumVon) + ";"
+                + this.JgDruck(v => v._DatumBis) + ";"
+                + this.JgDruck(v => v._Bezeichnung) + ";"
+                + this.JgDruck(v => v._DiktatKürzel) + ";"
+                + this.JgDruck(v => v._BuchungsTyp) + ";"
+                + this.JgDruck(v => v._Rechnungszweck) + ";"
+                + this.JgDruck(v => v._Festschreibung) + ";"
+                + this.JgDruck(v => v._WkZ) + ";"
+                + ";"
+                + this.JgDruck(v => v._Derivatskennzeichen) + ";"
+                + ";"
+                + ";"
+                + this.JgDruck(v => v._SKR) + ";"
+                + this.JgDruck(v => v._BranchenloesungId) + ";"
+                + ";"
+                + ";"
+                + this.JgDruck(v => v._AnwendungsInformation);
         }
     }
 }

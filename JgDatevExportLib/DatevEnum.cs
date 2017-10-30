@@ -58,10 +58,11 @@ namespace JgDatevExportLib
             FilialenAnlagenbuchflührung_1
         }
 
-        public enum EnumBuchungstyp : byte
+        public enum EnumBuchungstypHeader : byte
         {
             Finanzbuchführung = 1,
             Jahresabschluss = 2,
+
             leer = 254
         }
 
@@ -80,6 +81,7 @@ namespace JgDatevExportLib
         {
             KeineFestschreibung = 0,
             Festschreibung = 1,
+
             leer = 254
         }
 
@@ -137,6 +139,27 @@ namespace JgDatevExportLib
             Lastschrift = 1,
             Mahnung = 2,
             Zahlung = 3,
+
+            leer = 254
+        }
+
+        public enum EnumSkontoTyp : byte
+        {
+            EnkaufVonWaren = 1,
+            ErwerbVonRohHilfUndBetreibsstoffen = 2,
+
+            leer = 254
+        }
+
+        public enum EnumBuchungsTypKoerper : byte
+        {
+            AA_AngeforderteAnzahlung_Abschlagsrechnung,
+            AG_ErhalteneAnzahlung_Geldeingang,
+            AV_ErhalteneAnzahlung_Verbindlichkeit,
+            SR_Schlussrechnung,
+            SU_Schlussrechnung_Umbuchung,
+            SG_Schlussrechnung_Geldeingang,
+            SO_Sonstige,
 
             leer = 254
         }

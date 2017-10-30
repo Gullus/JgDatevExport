@@ -40,10 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttributDef.cs" />
+    <Compile Include="JgInfoAttribute.cs" />
     <Compile Include="DatevEnum.cs" />
     <Compile Include="DatevHeader.cs" />
     <Compile Include="DatevKoerper.cs" />
+    <Compile Include="JgInfoExtensions.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
