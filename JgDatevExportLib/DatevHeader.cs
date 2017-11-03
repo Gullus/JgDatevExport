@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using static JgDatevExportLib.DatevEnum;
 
 namespace JgDatevExportLib
 {
-    public class DatevHeader : INotifyPropertyChanged
+    public class DatevHeader : INotifyPropertyChanged, IListeAnzeige
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -14,13 +15,13 @@ namespace JgDatevExportLib
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        [JgInfo(true, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString )]
+        [JgInfo(true, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString)]
         private EnumDatevFormat _DatevFormatKz = EnumDatevFormat.EXTF;
         /// <summary>
         /// EXTF = für Dateiformate, die von externen Programmen erstellt wurden
         /// DTVF = für DATEV reserviert
         /// </summary>
-        public EnumDatevFormat DatevFormatKz { get => _DatevFormatKz; set => value = _DatevFormatKz ; }
+        public EnumDatevFormat DatevFormatKz { get => _DatevFormatKz; set => value = _DatevFormatKz; }
 
         [JgInfo(true, 999)]
         private int _Versionsnummer = 1;
@@ -71,7 +72,7 @@ namespace JgDatevExportLib
                     NotifyPropertyChanged();
             }
         }   // Wird beim Import in Datev belegt
- 
+
         [JgInfo(false, 2, 2)]
         private string _Herkunft = "RE";
         /// <summary>
@@ -210,7 +211,6 @@ namespace JgDatevExportLib
         /// </summary>
         public EnumBuchungstypHeader BuchungsTyp { get => _BuchungsTyp; set => _BuchungsTyp = value; }
 
-
         [JgInfo(false)]
         private EnumRechnungszweck _Rechnungszweck = EnumRechnungszweck.Unabhängig;
         public EnumRechnungszweck Rechnungszweck { get => _Rechnungszweck; set => _Rechnungszweck = value; }
@@ -222,7 +222,7 @@ namespace JgDatevExportLib
         /// </summary>
         public EnumFestschreibung Festschreibung { get => _Festschreibung; set => _Festschreibung = value; }
 
-        [JgInfo(false, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString )]
+        [JgInfo(false, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString)]
         private EnumWaehrung _WkZ = EnumWaehrung.EUR;
         /// <summary>
         /// Währungskennzeichen
@@ -235,8 +235,8 @@ namespace JgDatevExportLib
         public string Derivatskennzeichen { get => _Derivatskennzeichen; set => _Derivatskennzeichen = value; }
 
         [JgInfo(false)]
-        private string _SKR  = null;
-        public string SKR { get => _SKR; set =>_SKR = value; }
+        private string _SKR = null;
+        public string SKR { get => _SKR; set => _SKR = value; }
 
         [JgInfo(false)]
         private int? _BranchenloesungId = null;
@@ -290,6 +290,44 @@ namespace JgDatevExportLib
                 + ";"
                 + ";"
                 + this.JgDruck(v => v._AnwendungsInformation);
+        }
+
+        public List<DsListeAnzeige> ListeAnzeigeErstellen()
+        {
+            var lAnzeige = new List<DsListeAnzeige>();
+
+            lAnzeige.Add(this.JgAnzeige(v => v._DatevFormatKz));
+            lAnzeige.Add(this.JgAnzeige(v => v._Versionsnummer));
+            lAnzeige.Add(this.JgAnzeige(v => v._DatenKategorie));
+            lAnzeige.Add(this.JgAnzeige(v => v._FormatName));
+            lAnzeige.Add(this.JgAnzeige(v => v._FormatVersion));
+            lAnzeige.Add(this.JgAnzeige(v => v._ErzeugtAm));
+            lAnzeige.Add(this.JgAnzeige(v => v._Importiert));
+            lAnzeige.Add(this.JgAnzeige(v => v._Herkunft));
+            lAnzeige.Add(this.JgAnzeige(v => v._ExportiertVon));
+            lAnzeige.Add(this.JgAnzeige(v => v._ImportiertVon));
+            lAnzeige.Add(this.JgAnzeige(v => v._BeraterNummer));
+            lAnzeige.Add(this.JgAnzeige(v => v._MandantenNummer));
+            lAnzeige.Add(this.JgAnzeige(v => v._WjBeginn));
+            lAnzeige.Add(this.JgAnzeige(v => v._SachkontenNummernLaenge));
+            lAnzeige.Add(this.JgAnzeige(v => v._DatumVon));
+            lAnzeige.Add(this.JgAnzeige(v => v._DatumBis));
+            lAnzeige.Add(this.JgAnzeige(v => v._Bezeichnung));
+            lAnzeige.Add(this.JgAnzeige(v => v._DiktatKürzel));
+            lAnzeige.Add(this.JgAnzeige(v => v._BuchungsTyp));
+            lAnzeige.Add(this.JgAnzeige(v => v._Rechnungszweck));
+            lAnzeige.Add(this.JgAnzeige(v => v._Festschreibung));
+            lAnzeige.Add(this.JgAnzeige(v => v._WkZ));
+            lAnzeige.Add(this.JgAnzeige(v => v._Derivatskennzeichen));
+            lAnzeige.Add(this.JgAnzeige(v => v._SKR));
+            lAnzeige.Add(this.JgAnzeige(v => v._BranchenloesungId));
+            lAnzeige.Add(this.JgAnzeige(v => v._AnwendungsInformation));
+
+            var id = 1;
+            foreach (var ds in lAnzeige)
+                ds.Id = id++;
+
+            return lAnzeige;
         }
     }
 }

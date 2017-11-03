@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace JgDatevExport.Properties
+namespace JgDatevExportAnzeige.Properties
 {
 
 

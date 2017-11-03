@@ -51,8 +51,10 @@ namespace TestConsole
             {
 
                 var koerper = new DatevHeader();
+
                 Console.WriteLine(koerper.ToString());
 
+                var erg = koerper.ListeAnzeigeErstellen();
 
                 //Console.WriteLine(Properties.Resource.ResourceManager.GetString("String1"));
 

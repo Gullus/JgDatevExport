@@ -12,76 +12,21 @@ namespace JgDatevExportLib
             return (JgInfoAttribute)attrTemp[0];
         }
 
-        public static bool GetJgInfoAttribute<T>(this T obj, Expression<Func<T, string>> value, string WertNeu)
+        public static bool GetJgInfoAttribute<T>(this T obj, Expression<Func<T, object>> value, object WertNeu)
         {
-            var MemberExp = (MemberExpression)value.Body;
-            var info = obj.GetType().GetField(MemberExp.Member.Name, BindingFlags.NonPublic | BindingFlags.Instance);
-            var wert = (string)info.GetValue(obj);
+            var member = value.Body as MemberExpression;
+            var unary = value.Body as UnaryExpression;
+            var MemberExp = member ?? (unary != null ? unary.Operand as MemberExpression : null);
 
-            if (wert != WertNeu)
+            var info = obj.GetType().GetField(MemberExp.Member.Name, BindingFlags.NonPublic | BindingFlags.Instance);
+            var wert = info.GetValue(obj);
+            var type = info.FieldType;
+            var attr = GetAttrib(MemberExp);
+
+            if (wert.ToString() != WertNeu.ToString())
             {
                 info.SetValue(obj, WertNeu);
 
-                var attr = GetAttrib(MemberExp);
-
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public static bool GetJgInfoAttribute<T>(this T obj, Expression<Func<T, int>> value, int? WertNeu)
-        {
-            var MemberExp = (MemberExpression)value.Body;
-            var info = obj.GetType().GetField(MemberExp.Member.Name, BindingFlags.NonPublic | BindingFlags.Instance);
-            var wert = (int?)info.GetValue(obj);
-
-            if (wert != WertNeu)
-            {
-                info.SetValue(obj, WertNeu);
-
-                var attr = GetAttrib(MemberExp);
-
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public static bool GetJgInfoAttribute<T>(this T obj, Expression<Func<T, decimal>> value, decimal WertNeu)
-            where T : class
-        {
-            var MemberExp = (MemberExpression)value.Body;
-            var info = obj.GetType().GetField(MemberExp.Member.Name, BindingFlags.NonPublic | BindingFlags.Instance);
-            var wert = (decimal?)info.GetValue(obj);
-
-            if (wert != WertNeu)
-            {
-                info.SetValue(obj, WertNeu);
-
-                var attr = GetAttrib(MemberExp);
-
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public static bool GetJgInfoAttribute<T>(this T obj, Expression<Func<T, decimal?>> value, decimal? WertNeu)
-           where T : class
-        {
-            var MemberExp = (MemberExpression)value.Body;
-            var info = obj.GetType().GetField(MemberExp.Member.Name, BindingFlags.NonPublic | BindingFlags.Instance);
-            var wert = (decimal?)info.GetValue(obj);
-
-            if (wert != WertNeu)
-            {
-                info.SetValue(obj, WertNeu);
-
-                var attr = GetAttrib(MemberExp);
 
 
                 return true;
@@ -95,63 +40,101 @@ namespace JgDatevExportLib
         {
             var member = value.Body as MemberExpression;
             var unary = value.Body as UnaryExpression;
-            var MemberExp =  member ?? (unary != null ? unary.Operand as MemberExpression : null);
+            var MemberExp = member ?? (unary != null ? unary.Operand as MemberExpression : null);
 
             var info = obj.GetType().GetField(MemberExp.Member.Name, BindingFlags.NonPublic | BindingFlags.Instance);
             var wert = info.GetValue(obj);
             var type = info.FieldType;
-
             var attr = GetAttrib(MemberExp);
-
-
 
             if (type == typeof(string))
             {
                 if (wert != null)
-                return "\"" + wert.ToString() + "\"";
+                    return "\"" + wert.ToString() + "\"";
 
                 if (attr.IstErforderlich)
                     return "\"\"";
             }
-            else if (type == typeof(int))
+            else if ((type == typeof(int)) || (type == typeof(int?)))
             {
+                if (wert != null)
+                    return wert.ToString();
 
-
+                if (attr.IstErforderlich)
+                    return "0";
             }
-            else if (type == typeof(int?))
+            else if ((type == typeof(decimal)) || (type == typeof(decimal?)))
             {
+                if (wert != null)
+                    return ((decimal)wert).ToString(attr.Format);
 
-
-
+                if (attr.IstErforderlich)
+                    return "0,00";
             }
-            else if (type == typeof(decimal))
+            else if ((type == typeof(DateTime)) || (type == typeof(DateTime?)))
             {
-
-
-
-            }
-            else if (type == typeof(decimal?))
-            {
-
-            }
-            else if (type == typeof(DateTime))
-            {
-
-            }
-            else if (type == typeof(DateTime?))
-            {
-
+                if (wert != null)
+                    return ((DateTime)wert).ToString(attr.Format);
             }
             else
             {
+                var ar = Enum.GetNames(type);
 
+                var ss = wert.ToString();
+                if (ss != "leer")
+                {
+                    switch (attr.AnzeigeEnum)
+                    {
+                        case JgInfoAttribute.AnzeigeEnums.AlsZahl:
+                            return Convert.ToString((byte)wert);
+                        case JgInfoAttribute.AnzeigeEnums.AlsString:
+                            return ss;
+                        case JgInfoAttribute.AnzeigeEnums.ErsterBuchstabe:
+                            return ss[0].ToString();
+                        case JgInfoAttribute.AnzeigeEnums.ErsteZweiBuchstaben:
+                            return ss[0].ToString() + ss[1].ToString();
+                        case JgInfoAttribute.AnzeigeEnums.LetztesZeichen:
+                            return ss[ss.Length].ToString();
+                    }
+                }
             }
 
-
-
-
-
             return "";
+        }
+
+        public static DsListeAnzeige JgAnzeige<T>(this T obj, Expression<Func<T, object>> value)
+            where T : class
+        {
+            var member = value.Body as MemberExpression;
+            var unary = value.Body as UnaryExpression;
+            var MemberExp = member ?? (unary != null ? unary.Operand as MemberExpression : null);
+
+            var info = obj.GetType().GetField(MemberExp.Member.Name, BindingFlags.NonPublic | BindingFlags.Instance);
+            var attr = GetAttrib(MemberExp);
+
+            var erg = new DsListeAnzeige()
+            {
+                FeldName = info.Name.Substring(1),
+
+                IstErforderlich = attr.IstErforderlich,
+
+                TypeName = info.FieldType.ToString(),
+                Min = attr.Min,
+                Max = attr.Max,
+                Format = attr.Format,
+            };
+
+            var wert = info.GetValue(obj);
+            if (wert != null)
+                erg.FeldWert = info.GetValue(obj).ToString();
+
+            if (info.FieldType.IsEnum)
+            {
+                erg.IstEnum = true;
+                erg.EnumStringsFuerAuswahl = Enum.GetNames(info.FieldType);
+            }
+
+            return erg;
         }
     }
 }

@@ -1,0 +1,107 @@
+﻿<RibbonWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    xmlns:local="clr-namespace:JgDatevExportAnzeige"
+    
+    xmlns:JgDatevExportLib="clr-namespace:JgDatevExportLib;assembly=JgDatevExportLib" 
+    
+    mc:Ignorable="d"
+    x:Class="JgDatevExportAnzeige.FormAnzeige"
+    
+    Title="MainWindow" x:Name="RibbonWindow" Width="793" Height="480" Loaded="RibbonWindow_Loaded">
+
+    <RibbonWindow.Resources>
+        <CollectionViewSource x:Key="vsDaten" d:DesignSource="{d:DesignInstance {x:Type JgDatevExportLib:DsListeAnzeige}, CreateList=True}"/>
+    </RibbonWindow.Resources>
+
+    <Grid Margin="5" DataContext="{StaticResource vsDaten}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Ribbon Grid.ColumnSpan="2">
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu>
+
+                    <RibbonApplicationMenu.FooterPaneContent>
+                        <RibbonButton Label="Schließen" Command="{x:Static local:MyCommands.Beenden}" SmallImageSource="Bilder\JgClose.ico" HorizontalAlignment="Right" />
+                    </RibbonApplicationMenu.FooterPaneContent>
+
+                    <RibbonApplicationMenuItem Header="Header anzeigen" Command="{x:Static local:MyCommands.HeaderAnzeigen}" ImageSource="Bilder\JgPreview.ico"/>
+                    <RibbonApplicationMenuItem Header="Körper anzeigen" Command="{x:Static local:MyCommands.KoerperAnzeigen}" ImageSource="Bilder\JgCopy.ico"/>
+                    <RibbonApplicationMenuItem Header="BelegInfo anzeigen" Command="{x:Static local:MyCommands.BeleginfoAnzeigen}" ImageSource="Bilder\JgCopy.ico" />
+                    <RibbonApplicationMenuItem Header="ZusatzInfo anzeigen" Command="{x:Static local:MyCommands.ZusatzInformationAnzeigen}" ImageSource="Bilder\JgCopy.ico" />
+                    <RibbonSeparator/>
+                    <RibbonApplicationMenuItem Header="Daten laden" Command="{x:Static local:MyCommands.Laden}" ImageSource="Bilder\JgNew.ico" />
+                    <RibbonApplicationMenuItem Header="Daten speichern" Command="{x:Static local:MyCommands.Speichern}" ImageSource="Bilder\JgSave.ico" />
+
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+
+            <RibbonTab Header="Anzeigen" >
+                <RibbonGroup Header="Anzeigen">
+                    <RibbonButton Label="Header" Command="{x:Static local:MyCommands.HeaderAnzeigen}" LargeImageSource="Bilder\JgPreview.ico" />
+                    <RibbonButton Label="Koerper"  Command="{x:Static local:MyCommands.KoerperAnzeigen}" LargeImageSource="Bilder\JgCopy.ico"/>
+                    <RibbonButton Label="Beleg Info" Command="{x:Static local:MyCommands.BeleginfoAnzeigen}" LargeImageSource="Bilder\JgCopy.ico"/>
+                    <RibbonButton Label="Zusatz Information" Command="{x:Static local:MyCommands.ZusatzInformationAnzeigen}" LargeImageSource="Bilder\JgCopy.ico"/>
+                </RibbonGroup>
+                <RibbonGroup Header="Aktualisieren">
+                    <RibbonButton Label="Laden" Command="{x:Static local:MyCommands.Laden}" LargeImageSource="Bilder\JgNew.ico"/>
+                    <RibbonButton Label="Speichern" Command="{x:Static local:MyCommands.Speichern}" LargeImageSource="Bilder\JgSave.ico"/>
+                </RibbonGroup>
+                <RibbonGroup Header="Beenden">
+                    <RibbonButton Label="Beenden" Command="{x:Static local:MyCommands.Speichern}" LargeImageSource="Bilder\JgClose.ico"/>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+
+        <Border BorderBrush="#FFD1D1D1" Grid.Row="1" BorderThickness="1" Margin="0, 3, 0 , 0">
+            <Label Margin="0" x:Name="LabelAnzeige" Content="Header" FontWeight="Bold" Foreground="Black" >
+                <Label.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFF1F1F1" Offset="0"/>
+                        <GradientStop Color="#FFFDFDFD" Offset="1"/>
+                    </LinearGradientBrush>
+                </Label.Background>
+            </Label>
+        </Border>
+
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0,5,0,0" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Vertical" VerticalGridLinesBrush="#FFB2B2B2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="30">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                
+                <DataGridTextColumn Binding="{Binding FeldName}" Header="Feldname" Width="*"/>
+                <DataGridTextColumn Binding="{Binding TypeName}" Header="Type" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Format}" Header="Format" Width="*"/>
+                <DataGridCheckBoxColumn Binding="{Binding IstErforderlich}" Header="Erf." Width="40"/>
+                <DataGridTextColumn Binding="{Binding Max}" Header="Max" Width="60"/>
+                <DataGridTextColumn Binding="{Binding Min}" Header="Min" Width="60"/>
+                <DataGridTextColumn Binding="{Binding FeldZuordnung}" Header="Zuordnung" Width="*"/>
+                <DataGridTextColumn Binding="{Binding FeldWert}" Header="Wert" Width="*"/>
+
+                <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="EditWert">Edit</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</RibbonWindow>

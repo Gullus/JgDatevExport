@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace JgDatevExportLib
 {
@@ -16,6 +12,7 @@ namespace JgDatevExportLib
 
         public enum EnumDatenkategorie : byte
         {
+            // [Description]
             Buchungsstapel = 21,
             WiederkehrendeBuchungen = 65,
             Buchungskonstanten = 67,
@@ -162,6 +159,21 @@ namespace JgDatevExportLib
             SO_Sonstige,
 
             leer = 254
+        }
+
+        public enum FelderZuordnung
+        {
+            Konto,
+            SollHaben,
+            Kost_1,
+            Kost_2,
+            Wert,
+            Belegnummer,
+            Skonto,
+            FirmaNummer,
+            FirmaName,
+            BuchungsDatum,
+            BelegDatum
         }
     }
 }
