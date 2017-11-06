@@ -26,9 +26,6 @@ namespace JgDatevExportLib
             if (wert.ToString() != WertNeu.ToString())
             {
                 info.SetValue(obj, WertNeu);
-
-
-
                 return true;
             }
 
@@ -127,12 +124,6 @@ namespace JgDatevExportLib
             var wert = info.GetValue(obj);
             if (wert != null)
                 erg.FeldWert = info.GetValue(obj).ToString();
-
-            if (info.FieldType.IsEnum)
-            {
-                erg.IstEnum = true;
-                erg.EnumStringsFuerAuswahl = Enum.GetNames(info.FieldType);
-            }
 
             return erg;
         }

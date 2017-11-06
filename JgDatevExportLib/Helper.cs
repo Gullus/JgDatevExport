@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace JgDatevExportLib
 {
@@ -92,6 +94,78 @@ namespace JgDatevExportLib
         public static string DateinameErstellen(string DateiName, DateTime Datum)
         {
             return "EXTF_" + DateiName + "_" + Datum.ToString("ddMMyy_mmHH") + ".csv";
+        }
+
+        public static Dictionary<string, string> DatevFeldZuordnungAusString(string FelderAsString)
+        {
+            var erg = new Dictionary<string, string>();
+
+            var ds = FelderAsString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var felder in ds)
+            {
+                var spalten = felder.Split(new char[] { '|' });
+                erg.Add(spalten[0], spalten[1]);
+            }
+
+            return erg;
+        }
+
+        public static string DatevFeldZuordnungInString(Dictionary<string, string> Dic) => string.Join(";", Dic.Select(s => s.Key + "|" + s.Value));
+
+        public static void DatenSpeichern(string DateiName, DatevHeader Header, DatevKoerper Koerper)
+        {
+            var arrList = new ArrayList();
+            arrList.Add(Header);
+            arrList.Add(Koerper);
+
+            var fs = new FileStream(DateiName, FileMode.Create);
+            var formatter = new BinaryFormatter();
+
+            try
+            {
+                formatter.Serialize(fs, arrList);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                throw;
+            }
+            finally
+            {
+                fs.Close();
+            }
+        }
+
+        public static Tuple<DatevHeader, DatevKoerper> DatenLaden(string Dateiname)
+        {
+            var fs = new FileStream(Dateiname, FileMode.Open);
+            try
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                var arrList = (ArrayList)formatter.Deserialize(fs);
+
+                DatevHeader header = null;
+                DatevKoerper koerper = null;
+
+                foreach (var obj in arrList)
+                {
+                    if (obj is DatevHeader)
+                        header = (DatevHeader)obj;
+                    else if (obj is DatevKoerper)
+                        koerper = (DatevKoerper)obj;
+                }
+
+                return new Tuple<DatevHeader, DatevKoerper>(header, koerper);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
+                throw;
+            }
+            finally
+            {
+                fs.Close();
+            }
         }
     }
 }

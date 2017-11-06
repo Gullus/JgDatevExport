@@ -27,9 +27,6 @@ namespace JgDatevExportLib
         public int Max { get; set; }
         public string Format { get; set; }
 
-        public bool IstEnum { get; set; } = false;
-        public string[] EnumStringsFuerAuswahl { get; set; } = null;
-
         private string _FeldZuordnung = null;
         public string FeldZuordnung
         {
@@ -44,7 +41,7 @@ namespace JgDatevExportLib
             }
         }
 
-        public string _FeldWert = null;
+        private string _FeldWert = null;
         public string FeldWert
         {
             get => _FeldWert;

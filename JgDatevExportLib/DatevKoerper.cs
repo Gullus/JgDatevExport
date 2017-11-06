@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
 using static JgDatevExportLib.DatevEnum;
 
 namespace JgDatevExportLib
 {
-    public class TBelegInfo : INotifyPropertyChanged
+    public class TStamm
+    {
+        public int Id { get; set; }
+        public string Feldname { get; set; }
+    }
+
+    [Serializable]
+    public class TBelegInfo : TStamm, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -16,26 +23,30 @@ namespace JgDatevExportLib
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        [JgInfo(false, 20)]
-        private string _BeleginfoArt = null;
+        public string _BeleginfoArt = null;
         public string BeleginfoArt
         {
             get => _BeleginfoArt;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._BeleginfoArt, value))
+                if (_BeleginfoArt != value)
+                {
+                    _BeleginfoArt = value;
                     NotifyPropertyChanged();
+                }
             }
         }
 
-        [JgInfo(false, 210)]
-        private string _BeleginfoInhalt = null;
+        public string _BeleginfoInhalt = null;
         public string BeleginfoInhalt
         {
             get => _BeleginfoInhalt; set
             {
-                if (this.GetJgInfoAttribute(v => v._BeleginfoInhalt, value))
+                if (_BeleginfoInhalt != value)
+                {
+                    _BeleginfoInhalt = value;
                     NotifyPropertyChanged();
+                }
             }
         }
 
@@ -45,7 +56,8 @@ namespace JgDatevExportLib
         }
     }
 
-    public class TZusatzInformation : INotifyPropertyChanged
+    [Serializable]
+    public class TZusatzInformation : TStamm, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -54,26 +66,31 @@ namespace JgDatevExportLib
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        [JgInfo(false, 20)]
         private string _ZusatzinformationArt = null;
         public string ZusatzinformationArt
         {
             get => _ZusatzinformationArt;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._ZusatzinformationArt, value))
+                if (_ZusatzinformationArt != value)
+                {
+                    _ZusatzinformationArt = value;
                     NotifyPropertyChanged();
+                }
             }
         }
 
-        [JgInfo(false, 210)]
         private string _ZusatzinformationInhalt = null;
         public string ZusatzinformationInhalt
         {
-            get => _ZusatzinformationInhalt; set
+            get => _ZusatzinformationInhalt;
+            set
             {
-                if (this.GetJgInfoAttribute(v => v._ZusatzinformationInhalt, value))
+                if (_ZusatzinformationInhalt != value)
+                {
+                    _ZusatzinformationInhalt = value;
                     NotifyPropertyChanged();
+                }
             }
         }
 
@@ -95,13 +112,43 @@ namespace JgDatevExportLib
         public DatevKoerper()
         {
             for (int i = 0; i < 8; i++)
-                _BelegInfo[i] = new TBelegInfo();
+                _BelegInfo[i] = new TBelegInfo()
+                {
+                    Id = 21 + (i * 2),
+                    Feldname = "Beleginfo " + (i + 1).ToString()
+
+                };
 
             for (int i = 0; i < 20; i++)
             {
-                _ZusatzInformation[i] = new TZusatzInformation();
+                _ZusatzInformation[i] = new TZusatzInformation()
+                {
+                    Id = 48 + (i * 2),
+                    Feldname = "ZusatzInfo " + (i + 1).ToString()
+                };
             }
         }
+
+        //public void FelderArrayBelegen()
+        //{
+        //    for (int i = 0; i < 8; i++)
+        //        _BelegInfo[i] = new TBelegInfo()
+        //        {
+        //            Id = 20 + 1,
+        //            Feldname = "Beleginfo " + i.ToString()
+
+        //        };
+
+        //    for (int i = 0; i < 20; i++)
+        //    {
+        //        _ZusatzInformation[i] = new TZusatzInformation()
+        //        {
+        //            Id = 20 + 1,
+        //            Feldname = "Zusatzinformation " + i.ToString()
+        //        };
+        //    }
+
+        //}
 
         // Umsatz(ohne Soll/Haben-Kz)
 
@@ -132,7 +179,7 @@ namespace JgDatevExportLib
         // Kurs
 
         [JgInfo(false, 11, Format = "N6")]
-        public decimal? _Kurs = null;
+        private decimal? _Kurs = null;
         public decimal? Kurs
         {
             get => _Kurs;
@@ -385,13 +432,13 @@ namespace JgDatevExportLib
         // 40 - EU-Land u.UStID
 
         [JgInfo(false, 15)]
-        private string _UStId = null;
-        public string UStId
+        private string _EuMitgliedsStaatUStId = null;
+        public string EuMitgliedsStaatUStId
         {
-            get => _UStId;
+            get => _EuMitgliedsStaatUStId;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._UStId, value))
+                if (this.GetJgInfoAttribute(v => v._EuMitgliedsStaatUStId, value))
                     NotifyPropertyChanged();
             }
         }
@@ -588,13 +635,13 @@ namespace JgDatevExportLib
         // Ust-Schlüssel(Anzahlungen)
 
         [JgInfo(false, 99)]
-        private int? _UstUstSchluesselAnzahlungen = null;
-        public int? UstUstSchluesselAnzahlungen
+        private int? _UstSchluesselAnzahlungen = null;
+        public int? UstSchluesselAnzahlungen
         {
-            get => _UstUstSchluesselAnzahlungen;
+            get => _UstSchluesselAnzahlungen;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._UstUstSchluesselAnzahlungen, value))
+                if (this.GetJgInfoAttribute(v => v._UstSchluesselAnzahlungen, value))
                     NotifyPropertyChanged();
             }
         }
@@ -751,12 +798,12 @@ namespace JgDatevExportLib
         // 110 - Zeichnernummer
 
         [JgInfo(false, 20)]
-        private string _ZeichenNummer = null;
-        public string ZeichenNummer
+        private string _ZeichnerNummer = null;
+        public string ZeichnerNummer
         {
-            get => _ZeichenNummer; set
+            get => _ZeichnerNummer; set
             {
-                if (this.GetJgInfoAttribute(v => v._ZeichenNummer, value))
+                if (this.GetJgInfoAttribute(v => v._ZeichnerNummer, value))
                     NotifyPropertyChanged();
             }
         }
@@ -810,5 +857,210 @@ namespace JgDatevExportLib
         [JgInfo(false, Format = "ddMMyyyy")]
         private DateTime? _DatumZuordnungSteuerperiode = null;
         public DateTime? DatumZuordnungSteuerperiode { get => _DatumZuordnungSteuerperiode; set => _DatumZuordnungSteuerperiode = value; }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(this.JgDruck(v => v._Umsatz) + ";");
+            sb.Append(this.JgDruck(v => v._SollHaben) + ";");
+            sb.Append(this.JgDruck(v => v._WkzUmsatz) + ";");
+            sb.Append(this.JgDruck(v => v._Kurs) + ";");
+            sb.Append(this.JgDruck(v => v._BasisUmsatz) + ";");
+            sb.Append(this.JgDruck(v => v._WkzBasisUmsatz) + ";");
+            sb.Append(this.JgDruck(v => v._Konto) + ";");
+            sb.Append(this.JgDruck(v => v._GegenKonto) + ";");
+            sb.Append(this.JgDruck(v => v._BuSchluessel) + ";");
+            sb.Append(this.JgDruck(v => v._Belegdatum) + ";");
+            sb.Append(this.JgDruck(v => v._Belegfeld1) + ";");
+            sb.Append(this.JgDruck(v => v._Belegfeld2) + ";");
+            sb.Append(this.JgDruck(v => v._Skonto) + ";");
+            sb.Append(this.JgDruck(v => v._Buchungstext) + ";");
+            sb.Append(this.JgDruck(v => v._PostenSperre) + ";");
+            sb.Append(this.JgDruck(v => v._DiverseAdressNummer) + ";");
+            sb.Append(this.JgDruck(v => v._GeschäftspartnerBank) + ";");
+            sb.Append(this.JgDruck(v => v._Sachverhalt) + ";");
+            sb.Append(this.JgDruck(v => v._Zinssperre) + ";");
+            sb.Append(this.JgDruck(v => v._BelegLink) + ";"); ;
+
+            foreach (var belegInfo in this._BelegInfo)
+                sb.Append(belegInfo.BeleginfoArt + ";" + belegInfo.BeleginfoInhalt + ";");
+
+            sb.Append(this.JgDruck(v => v._Kost1) + ";");
+            sb.Append(this.JgDruck(v => v._Kost2) + ";");
+            sb.Append(this.JgDruck(v => v._KostMenge) + ";");
+            sb.Append(this.JgDruck(v => v._EuMitgliedsStaatUStId) + ";");
+            sb.Append(this.JgDruck(v => v._EuSteuersatz) + ";");
+            sb.Append(this.JgDruck(v => v._AbwVersteuerungsart) + ";");
+            sb.Append(this.JgDruck(v => v._Sachverhalt_L_L) + ";");
+            sb.Append(this.JgDruck(v => v._FunktionsErgänzung_L_L) + ";");
+            sb.Append(this.JgDruck(v => v._Bu49Hauptfunktionstyp) + ";");
+            sb.Append(this.JgDruck(v => v._Bu49Hauptfunktionsnummer) + ";");
+            sb.Append(this.JgDruck(v => v._Bu49Funktionsergänzung) + ";"); ;
+
+            foreach (var zusatzInfo in this._ZusatzInformation)
+                sb.Append(zusatzInfo.ZusatzinformationArt + ";" + zusatzInfo.ZusatzinformationInhalt + ";");
+
+            sb.Append(this.JgDruck(v => v._Stueck) + ";");
+            sb.Append(this.JgDruck(v => v._Gewicht) + ";");
+            sb.Append(this.JgDruck(v => v._Zahlweise) + ";");
+            sb.Append(this.JgDruck(v => v._ForderungsArt) + ";");
+            sb.Append(this.JgDruck(v => v._Veranlagungsjahr) + ";");
+            sb.Append(this.JgDruck(v => v._ZugeordneteFaelligkeit) + ";");
+            sb.Append(this.JgDruck(v => v._SkontoType) + ";");
+            sb.Append(this.JgDruck(v => v._Auftragsnummer) + ";");
+            sb.Append(this.JgDruck(v => v._BuchungsTyp) + ";");
+            sb.Append(this.JgDruck(v => v._UstSchluesselAnzahlungen) + ";");
+            sb.Append(this.JgDruck(v => v._EuMitgliedstaatAnzahlungen) + ";");
+            sb.Append(this.JgDruck(v => v._Sachverhalt_L_L_Anzahlungen) + ";");
+            sb.Append(this.JgDruck(v => v._EuSteuersatzAnzahlungen) + ";");
+            sb.Append(this.JgDruck(v => v._ErloeskontoAnzahlungen) + ";");
+            sb.Append(this.JgDruck(v => v._HerkunftKfz) + ";");
+            sb.Append(this.JgDruck(v => v._Leerfeld) + ";");
+            sb.Append(this.JgDruck(v => v._KostDatum) + ";");
+            sb.Append(this.JgDruck(v => v._SepaMandatsreferenz) + ";");
+            sb.Append(this.JgDruck(v => v._Skontosperre) + ";");
+            sb.Append(this.JgDruck(v => v._GesellschafterName) + ";");
+            sb.Append(this.JgDruck(v => v._BeteiligtenNummer) + ";");
+            sb.Append(this.JgDruck(v => v._IdentifikationsNummer) + ";");
+            sb.Append(this.JgDruck(v => v._ZeichnerNummer) + ";");
+            sb.Append(this.JgDruck(v => v._PostensperreBis) + ";");
+            sb.Append(this.JgDruck(v => v._BezeichnungSoBilSachverhalt) + ";");
+            sb.Append(this.JgDruck(v => v._KennzeichenSoBilBuchung) + ";");
+            sb.Append(this.JgDruck(v => v._Festschreibung) + ";");
+            sb.Append(this.JgDruck(v => v._Leistungsdatum) + ";");
+            sb.Append(this.JgDruck(v => v._DatumZuordnungSteuerperiode) + ";");
+
+            return sb.ToString();
+        }
+
+        public List<DsListeAnzeige> ListeAnzeigeKoerperErstellen()
+        {
+            var lAnzeige = new List<DsListeAnzeige>();
+
+            lAnzeige.Add(this.JgAnzeige(v => v._Umsatz));
+            lAnzeige.Add(this.JgAnzeige(v => v._SollHaben));
+            lAnzeige.Add(this.JgAnzeige(v => v._WkzUmsatz));
+            lAnzeige.Add(this.JgAnzeige(v => v._Kurs));
+            lAnzeige.Add(this.JgAnzeige(v => v._BasisUmsatz));
+            lAnzeige.Add(this.JgAnzeige(v => v._WkzBasisUmsatz));
+            lAnzeige.Add(this.JgAnzeige(v => v._Konto));
+            lAnzeige.Add(this.JgAnzeige(v => v._GegenKonto));
+            lAnzeige.Add(this.JgAnzeige(v => v._BuSchluessel));
+            lAnzeige.Add(this.JgAnzeige(v => v._Belegdatum));
+            lAnzeige.Add(this.JgAnzeige(v => v._Belegfeld1));
+            lAnzeige.Add(this.JgAnzeige(v => v._Belegfeld2));
+            lAnzeige.Add(this.JgAnzeige(v => v._Skonto));
+            lAnzeige.Add(this.JgAnzeige(v => v._Buchungstext));
+            lAnzeige.Add(this.JgAnzeige(v => v._PostenSperre));
+            lAnzeige.Add(this.JgAnzeige(v => v._DiverseAdressNummer));
+            lAnzeige.Add(this.JgAnzeige(v => v._GeschäftspartnerBank));
+            lAnzeige.Add(this.JgAnzeige(v => v._Sachverhalt));
+            lAnzeige.Add(this.JgAnzeige(v => v._Zinssperre));
+            lAnzeige.Add(this.JgAnzeige(v => v._BelegLink)); ;
+
+            lAnzeige.Add(this.JgAnzeige(v => v._Kost1));
+            lAnzeige.Add(this.JgAnzeige(v => v._Kost2));
+            lAnzeige.Add(this.JgAnzeige(v => v._KostMenge));
+            lAnzeige.Add(this.JgAnzeige(v => v._EuMitgliedsStaatUStId));
+            lAnzeige.Add(this.JgAnzeige(v => v._EuSteuersatz));
+            lAnzeige.Add(this.JgAnzeige(v => v._AbwVersteuerungsart));
+            lAnzeige.Add(this.JgAnzeige(v => v._Sachverhalt_L_L));
+            lAnzeige.Add(this.JgAnzeige(v => v._FunktionsErgänzung_L_L));
+            lAnzeige.Add(this.JgAnzeige(v => v._Bu49Hauptfunktionstyp));
+            lAnzeige.Add(this.JgAnzeige(v => v._Bu49Hauptfunktionsnummer));
+            lAnzeige.Add(this.JgAnzeige(v => v._Bu49Funktionsergänzung)); ;
+
+            lAnzeige.Add(this.JgAnzeige(v => v._Stueck));
+            lAnzeige.Add(this.JgAnzeige(v => v._Gewicht));
+            lAnzeige.Add(this.JgAnzeige(v => v._Zahlweise));
+            lAnzeige.Add(this.JgAnzeige(v => v._ForderungsArt));
+            lAnzeige.Add(this.JgAnzeige(v => v._Veranlagungsjahr));
+            lAnzeige.Add(this.JgAnzeige(v => v._ZugeordneteFaelligkeit));
+            lAnzeige.Add(this.JgAnzeige(v => v._SkontoType));
+            lAnzeige.Add(this.JgAnzeige(v => v._Auftragsnummer));
+            lAnzeige.Add(this.JgAnzeige(v => v._BuchungsTyp));
+            lAnzeige.Add(this.JgAnzeige(v => v._UstSchluesselAnzahlungen));
+            lAnzeige.Add(this.JgAnzeige(v => v._EuMitgliedstaatAnzahlungen));
+            lAnzeige.Add(this.JgAnzeige(v => v._Sachverhalt_L_L_Anzahlungen));
+            lAnzeige.Add(this.JgAnzeige(v => v._EuSteuersatzAnzahlungen));
+            lAnzeige.Add(this.JgAnzeige(v => v._ErloeskontoAnzahlungen));
+            lAnzeige.Add(this.JgAnzeige(v => v._HerkunftKfz));
+            lAnzeige.Add(this.JgAnzeige(v => v._Leerfeld));
+            lAnzeige.Add(this.JgAnzeige(v => v._KostDatum));
+            lAnzeige.Add(this.JgAnzeige(v => v._SepaMandatsreferenz));
+            lAnzeige.Add(this.JgAnzeige(v => v._Skontosperre));
+            lAnzeige.Add(this.JgAnzeige(v => v._GesellschafterName));
+            lAnzeige.Add(this.JgAnzeige(v => v._BeteiligtenNummer));
+            lAnzeige.Add(this.JgAnzeige(v => v._IdentifikationsNummer));
+            lAnzeige.Add(this.JgAnzeige(v => v._ZeichnerNummer));
+            lAnzeige.Add(this.JgAnzeige(v => v._PostensperreBis));
+            lAnzeige.Add(this.JgAnzeige(v => v._BezeichnungSoBilSachverhalt));
+            lAnzeige.Add(this.JgAnzeige(v => v._KennzeichenSoBilBuchung));
+            lAnzeige.Add(this.JgAnzeige(v => v._Festschreibung));
+            lAnzeige.Add(this.JgAnzeige(v => v._Leistungsdatum));
+            lAnzeige.Add(this.JgAnzeige(v => v._DatumZuordnungSteuerperiode));
+
+            var zaehler = 0;
+            foreach(var ds in lAnzeige)
+            {
+                zaehler++;
+                switch (zaehler)
+                {
+                    case 21: zaehler = 37; break;
+                    case 48: zaehler = 88; break;
+                }
+
+                ds.Id = zaehler;
+            }
+
+            return lAnzeige;
+        }
+
+        public List<DsListeAnzeige> ListeAnzeigeBelegInfoErstellen()
+        {
+            var lAnzeige = new List<DsListeAnzeige>();
+            var zahler = 0;
+
+            foreach (var belegInfo in this._BelegInfo)
+            {
+                zahler++;
+
+                var dsAnzeige = belegInfo.JgAnzeige(v => belegInfo._BeleginfoArt);
+                dsAnzeige.Id = 19 + (zahler * 2);
+                dsAnzeige.FeldName = dsAnzeige.FeldName + "_" + zahler.ToString();
+                lAnzeige.Add(dsAnzeige);
+
+                dsAnzeige = belegInfo.JgAnzeige(v => belegInfo._BeleginfoInhalt);
+                dsAnzeige.Id = 20 + (zahler * 2);
+                dsAnzeige.FeldName = dsAnzeige.FeldName + "_" + zahler.ToString();
+                lAnzeige.Add(dsAnzeige);
+            }
+
+            return lAnzeige;
+        }
+
+        public List<DsListeAnzeige> ListeAnzeigeZusatzInfoErstellen()
+        {
+            var lAnzeige = new List<DsListeAnzeige>();
+            var zahler = 0;
+
+            foreach (var belegInfo in this._ZusatzInformation)
+            {
+                zahler++;
+
+                var dsAnzeige = belegInfo.JgAnzeige(v => belegInfo.ZusatzinformationArt);
+                dsAnzeige.Id = 46 + (zahler * 2);
+                dsAnzeige.FeldName = dsAnzeige.FeldName + "_" + zahler.ToString();
+                lAnzeige.Add(dsAnzeige);
+
+                dsAnzeige = belegInfo.JgAnzeige(v => belegInfo.ZusatzinformationInhalt);
+                dsAnzeige.Id = 47 + (zahler * 2);
+                dsAnzeige.FeldName = dsAnzeige.FeldName + "_" + zahler.ToString();
+                lAnzeige.Add(dsAnzeige);
+            }
+
+            return lAnzeige;
+        }
     }
 }

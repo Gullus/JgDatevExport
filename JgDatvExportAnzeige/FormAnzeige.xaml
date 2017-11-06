@@ -27,7 +27,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Ribbon Grid.ColumnSpan="2">
+        <Ribbon>
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
 
@@ -58,7 +58,7 @@
                     <RibbonButton Label="Speichern" Command="{x:Static local:MyCommands.Speichern}" LargeImageSource="Bilder\JgSave.ico"/>
                 </RibbonGroup>
                 <RibbonGroup Header="Beenden">
-                    <RibbonButton Label="Beenden" Command="{x:Static local:MyCommands.Speichern}" LargeImageSource="Bilder\JgClose.ico"/>
+                    <RibbonButton Label="Beenden" Command="{x:Static local:MyCommands.Beenden}" LargeImageSource="Bilder\JgClose.ico"/>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
@@ -74,7 +74,7 @@
             </Label>
         </Border>
 
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0,5,0,0" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Vertical" VerticalGridLinesBrush="#FFB2B2B2">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0,5,0,0" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected" GridLinesVisibility="Vertical" VerticalGridLinesBrush="LightGray" IsReadOnly="True" AlternatingRowBackground="#FFE2E2E2">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="30">
                     <DataGridTextColumn.ElementStyle>
@@ -83,25 +83,33 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                
+
                 <DataGridTextColumn Binding="{Binding FeldName}" Header="Feldname" Width="*"/>
                 <DataGridTextColumn Binding="{Binding TypeName}" Header="Type" Width="*"/>
                 <DataGridTextColumn Binding="{Binding Format}" Header="Format" Width="*"/>
                 <DataGridCheckBoxColumn Binding="{Binding IstErforderlich}" Header="Erf." Width="40"/>
-                <DataGridTextColumn Binding="{Binding Max}" Header="Max" Width="60"/>
                 <DataGridTextColumn Binding="{Binding Min}" Header="Min" Width="60"/>
+                <DataGridTextColumn Binding="{Binding Max}" Header="Max" Width="60"/>
                 <DataGridTextColumn Binding="{Binding FeldZuordnung}" Header="Zuordnung" Width="*"/>
-                <DataGridTextColumn Binding="{Binding FeldWert}" Header="Wert" Width="*"/>
 
-                <DataGridTemplateColumn Width="50">
+                <DataGridTemplateColumn Width="40">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Click="EditWert">Edit</Button>
+                            <Button Click="EditFeldZuordnung">Edit</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Binding="{Binding FeldWert}" Header="Wert" Width="*"/>
+
+                <DataGridTemplateColumn Width="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="EditWertVorgabe">Edit</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </RibbonWindow>

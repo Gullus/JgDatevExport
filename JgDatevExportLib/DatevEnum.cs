@@ -6,7 +6,7 @@ namespace JgDatevExportLib
     {
         public enum EnumDatevFormat : byte
         {
-            EXTF,
+            EXTF = 0,
             DTVF
         }
 

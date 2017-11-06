@@ -16,12 +16,12 @@ namespace JgDatevExportLib
         }
 
         [JgInfo(true, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString)]
-        private EnumDatevFormat _DatevFormatKz = EnumDatevFormat.EXTF;
+        private EnumDatevFormat _DatevFormatKz = EnumDatevFormat.DTVF;
         /// <summary>
         /// EXTF = für Dateiformate, die von externen Programmen erstellt wurden
         /// DTVF = für DATEV reserviert
         /// </summary>
-        public EnumDatevFormat DatevFormatKz { get => _DatevFormatKz; set => value = _DatevFormatKz; }
+        public EnumDatevFormat DatevFormatKz { get => _DatevFormatKz; set => _DatevFormatKz = value; }
 
         [JgInfo(true, 999)]
         private int _Versionsnummer = 1;

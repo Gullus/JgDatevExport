@@ -67,14 +67,28 @@
       <DependentUpon>FormAnzeige.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="FormEditWert.xaml">
+    <Page Include="FormEditBelegInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormEditFeldZuordnung.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FormEditVorgabe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormEditWert.xaml.cs">
-      <DependentUpon>FormEditWert.xaml</DependentUpon>
+    <Compile Include="FormEditBelegInfo.xaml.cs">
+      <DependentUpon>FormEditBelegInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormEditFeldZuordnung.xaml.cs">
+      <DependentUpon>FormEditFeldZuordnung.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormEditVorgabe.xaml.cs">
+      <DependentUpon>FormEditVorgabe.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -94,7 +108,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\JgDatevExportLib.DatevHeader.datasource" />
     <None Include="Properties\DataSources\JgDatevExportLib.DsListeAnzeige.datasource" />
+    <None Include="Properties\DataSources\JgDatevExportLib.TBelegInfo.datasource" />
+    <None Include="Properties\DataSources\JgDatevExportLib.TZusatzInformation.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
