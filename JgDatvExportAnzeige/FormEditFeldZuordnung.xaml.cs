@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
-using static JgDatevExportLib.DatevEnum;
+using static JgDatevExportLib.DatevFeldZuordnung;
 
-namespace JgDatvExportAnzeige
+namespace JgDatevExportAnzeige
 {
     public partial class FormEditFeldZuordnung : Window
     {

@@ -6,8 +6,7 @@
     
     xmlns:local="clr-namespace:JgDatevExportAnzeige"
     
-    xmlns:JgDatevExportLib="clr-namespace:JgDatevExportLib;assembly=JgDatevExportLib" 
-    
+    xmlns:JgDatevExportLib="clr-namespace:JgDatevExportLib;assembly=JgDatevExportLib"
     mc:Ignorable="d"
     x:Class="JgDatevExportAnzeige.FormAnzeige"
     
@@ -16,7 +15,7 @@
     <RibbonWindow.Resources>
         <CollectionViewSource x:Key="vsDaten" d:DesignSource="{d:DesignInstance {x:Type JgDatevExportLib:DsListeAnzeige}, CreateList=True}"/>
     </RibbonWindow.Resources>
-
+    
     <Grid Margin="5" DataContext="{StaticResource vsDaten}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -90,9 +89,9 @@
                 <DataGridCheckBoxColumn Binding="{Binding IstErforderlich}" Header="Erf." Width="40"/>
                 <DataGridTextColumn Binding="{Binding Min}" Header="Min" Width="60"/>
                 <DataGridTextColumn Binding="{Binding Max}" Header="Max" Width="60"/>
-                <DataGridTextColumn Binding="{Binding FeldZuordnung}" Header="Zuordnung" Width="*"/>
+                <DataGridTextColumn x:Name="ColZuordnungFeld" Visibility="Collapsed" Binding="{Binding FeldZuordnung}" Header="Zuordnung" Width="*"/>
 
-                <DataGridTemplateColumn Width="40">
+                <DataGridTemplateColumn x:Name="ColZuordnungSchalter" Visibility="Collapsed" Width="40">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="EditFeldZuordnung">Edit</Button>
@@ -100,7 +99,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Binding="{Binding FeldWert}" Header="Wert" Width="*"/>
+                <DataGridTextColumn Binding="{Binding FeldWert}" Header="Vorgabewert" Width="*"/>
 
                 <DataGridTemplateColumn Width="40">
                     <DataGridTemplateColumn.CellTemplate>

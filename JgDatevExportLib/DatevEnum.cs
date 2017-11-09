@@ -160,20 +160,5 @@ namespace JgDatevExportLib
 
             leer = 254
         }
-
-        public enum FelderZuordnung
-        {
-            Konto,
-            SollHaben,
-            Kost_1,
-            Kost_2,
-            Wert,
-            Belegnummer,
-            Skonto,
-            FirmaNummer,
-            FirmaName,
-            BuchungsDatum,
-            BelegDatum
-        }
     }
 }

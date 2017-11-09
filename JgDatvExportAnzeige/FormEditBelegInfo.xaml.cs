@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace JgDatvExportAnzeige
+namespace JgDatevExportAnzeige
 {
     public partial class FormEditBelegInfo : Window
     {

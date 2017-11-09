@@ -14,10 +14,13 @@ namespace JgDatevExportLib
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public delegate string GetFeldZuordnungDelegate(string Feldnme);
+        public GetFeldZuordnungDelegate OnGetFeldZuordnung = null;
 
         public int Id { get; set; }
         public string FeldName { get; set; }
@@ -27,18 +30,9 @@ namespace JgDatevExportLib
         public int Max { get; set; }
         public string Format { get; set; }
 
-        private string _FeldZuordnung = null;
         public string FeldZuordnung
         {
-            get => _FeldZuordnung;
-            set
-            {
-                if (_FeldZuordnung != value)
-                {
-                    _FeldZuordnung = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            get => OnGetFeldZuordnung(FeldName);
         }
 
         private string _FeldWert = null;

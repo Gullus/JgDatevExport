@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +37,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,7 +79,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FormEditVorgabe.xaml">
+    <Page Include="FormEditVorgabeEnum.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FormEditVorgabeWert.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -87,8 +95,11 @@
     <Compile Include="FormEditFeldZuordnung.xaml.cs">
       <DependentUpon>FormEditFeldZuordnung.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FormEditVorgabe.xaml.cs">
-      <DependentUpon>FormEditVorgabe.xaml</DependentUpon>
+    <Compile Include="FormEditVorgabeEnum.xaml.cs">
+      <DependentUpon>FormEditVorgabeEnum.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormEditVorgabeWert.xaml.cs">
+      <DependentUpon>FormEditVorgabeWert.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -108,6 +119,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\JgDatevExportLib.DatevHeader.datasource" />
     <None Include="Properties\DataSources\JgDatevExportLib.DsListeAnzeige.datasource" />
     <None Include="Properties\DataSources\JgDatevExportLib.TBelegInfo.datasource" />

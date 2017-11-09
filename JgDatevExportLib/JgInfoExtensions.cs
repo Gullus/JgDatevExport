@@ -23,9 +23,56 @@ namespace JgDatevExportLib
             var type = info.FieldType;
             var attr = GetAttrib(MemberExp);
 
-            if (wert.ToString() != WertNeu.ToString())
+            if ((wert == null) || (wert.ToString() != WertNeu.ToString()))
             {
+
+                if (type == typeof(String))
+                {
+                    var erg = WertNeu.ToString();
+                    if (erg.Length < attr.Min)
+                        throw new ArgumentOutOfRangeException($"Anzahl der Zeichen muss größer {attr.Min} sein.");
+                    else if (erg.Length > attr.Max)
+                        throw new ArgumentOutOfRangeException($"Anzahl der Zeichen muss kleiner {attr.Max} sein.");
+
+                }
+                else if (type == typeof(int))
+                {
+                    int erg = -1;
+                    try
+                    {
+                        erg = Convert.ToInt32(WertNeu);
+                    }
+                    catch
+                    {
+                        throw new ArgumentOutOfRangeException($"Wert muss eine Zahl sein.");
+                    }
+
+                    if (erg < attr.Min)
+                        throw new ArgumentOutOfRangeException($"Die Zahl muss größer {attr.Min} sein.");
+                    else if (erg > attr.Max)
+                        throw new ArgumentOutOfRangeException($"Die Zahl muss kleiner {attr.Max} sein.");
+
+                }
+                else if (type == typeof(decimal))
+                {
+                    decimal erg = -1;
+                    try
+                    {
+                        erg = Convert.ToDecimal(WertNeu);
+                    }
+                    catch
+                    {
+                        throw new ArgumentOutOfRangeException($"Wert muss eine Zahl sein.");
+                    }
+
+                    if (erg < attr.Min)
+                        throw new ArgumentOutOfRangeException($"Die Zahl muss größer {attr.Min} sein.");
+                    else if (erg > attr.Max)
+                        throw new ArgumentOutOfRangeException($"Die Zahl muss kleiner {attr.Max} sein.");
+                }
+
                 info.SetValue(obj, WertNeu);
+
                 return true;
             }
 

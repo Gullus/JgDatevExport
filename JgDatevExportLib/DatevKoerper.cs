@@ -7,15 +7,22 @@ using static JgDatevExportLib.DatevEnum;
 
 namespace JgDatevExportLib
 {
+    [Serializable]
     public class TStamm
     {
-        public int Id { get; set; }
-        public string Feldname { get; set; }
+        [NonSerialized]
+        private int _Id = 0;
+        public int Id { get => _Id; set => _Id = value; }
+
+        [NonSerialized]
+        private string _Feldname = "";
+        public string Feldname { get => _Feldname; set => _Feldname = value; }
     }
 
     [Serializable]
     public class TBelegInfo : TStamm, INotifyPropertyChanged
     {
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -59,6 +66,7 @@ namespace JgDatevExportLib
     [Serializable]
     public class TZusatzInformation : TStamm, INotifyPropertyChanged
     {
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -100,8 +108,10 @@ namespace JgDatevExportLib
         }
     }
 
+    [Serializable]
     public class DatevKoerper : INotifyPropertyChanged
     {
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -110,6 +120,11 @@ namespace JgDatevExportLib
         }
 
         public DatevKoerper()
+        {
+            FelderArrayMitNummerUndFeldBelegen();
+        }
+
+        public void FelderArrayMitNummerUndFeldBelegen()
         {
             for (int i = 0; i < 8; i++)
                 _BelegInfo[i] = new TBelegInfo()
@@ -129,26 +144,9 @@ namespace JgDatevExportLib
             }
         }
 
-        //public void FelderArrayBelegen()
-        //{
-        //    for (int i = 0; i < 8; i++)
-        //        _BelegInfo[i] = new TBelegInfo()
-        //        {
-        //            Id = 20 + 1,
-        //            Feldname = "Beleginfo " + i.ToString()
+        // Felder Zuordnung Programm -> DatevExport speichern
 
-        //        };
-
-        //    for (int i = 0; i < 20; i++)
-        //    {
-        //        _ZusatzInformation[i] = new TZusatzInformation()
-        //        {
-        //            Id = 20 + 1,
-        //            Feldname = "Zusatzinformation " + i.ToString()
-        //        };
-        //    }
-
-        //}
+        public string FelderZuordnungDatevExport = ""; 
 
         // Umsatz(ohne Soll/Haben-Kz)
 
@@ -1002,7 +1000,7 @@ namespace JgDatevExportLib
             lAnzeige.Add(this.JgAnzeige(v => v._DatumZuordnungSteuerperiode));
 
             var zaehler = 0;
-            foreach(var ds in lAnzeige)
+            foreach (var ds in lAnzeige)
             {
                 zaehler++;
                 switch (zaehler)
@@ -1012,52 +1010,6 @@ namespace JgDatevExportLib
                 }
 
                 ds.Id = zaehler;
-            }
-
-            return lAnzeige;
-        }
-
-        public List<DsListeAnzeige> ListeAnzeigeBelegInfoErstellen()
-        {
-            var lAnzeige = new List<DsListeAnzeige>();
-            var zahler = 0;
-
-            foreach (var belegInfo in this._BelegInfo)
-            {
-                zahler++;
-
-                var dsAnzeige = belegInfo.JgAnzeige(v => belegInfo._BeleginfoArt);
-                dsAnzeige.Id = 19 + (zahler * 2);
-                dsAnzeige.FeldName = dsAnzeige.FeldName + "_" + zahler.ToString();
-                lAnzeige.Add(dsAnzeige);
-
-                dsAnzeige = belegInfo.JgAnzeige(v => belegInfo._BeleginfoInhalt);
-                dsAnzeige.Id = 20 + (zahler * 2);
-                dsAnzeige.FeldName = dsAnzeige.FeldName + "_" + zahler.ToString();
-                lAnzeige.Add(dsAnzeige);
-            }
-
-            return lAnzeige;
-        }
-
-        public List<DsListeAnzeige> ListeAnzeigeZusatzInfoErstellen()
-        {
-            var lAnzeige = new List<DsListeAnzeige>();
-            var zahler = 0;
-
-            foreach (var belegInfo in this._ZusatzInformation)
-            {
-                zahler++;
-
-                var dsAnzeige = belegInfo.JgAnzeige(v => belegInfo.ZusatzinformationArt);
-                dsAnzeige.Id = 46 + (zahler * 2);
-                dsAnzeige.FeldName = dsAnzeige.FeldName + "_" + zahler.ToString();
-                lAnzeige.Add(dsAnzeige);
-
-                dsAnzeige = belegInfo.JgAnzeige(v => belegInfo.ZusatzinformationInhalt);
-                dsAnzeige.Id = 47 + (zahler * 2);
-                dsAnzeige.FeldName = dsAnzeige.FeldName + "_" + zahler.ToString();
-                lAnzeige.Add(dsAnzeige);
             }
 
             return lAnzeige;

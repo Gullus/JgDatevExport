@@ -5,63 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows;
 
 namespace JgDatevExportLib
 {
     public static class Helper
     {
-        public static bool KontrStringOk(ref string Vorhanden, string StringNeu, string Feldname, int Min, int Max)
-        {
-            if (StringNeu.Length < Min)
-            {
-                Fehler($"Für Feld {Feldname} muss die Zeichenanzahl größer {Min} sein. ({StringNeu})");
-                return false;
-            }
-            if ((StringNeu.Length > Max))
-            {
-                Fehler($"Für Feld {Feldname} muss die Zeichenanzahl kleiner {Max} sein. ({StringNeu})");
-                return false;
-            }
-
-            Vorhanden = StringNeu;
-            return true;
-        }
-
-        public static bool KontrIntOk(ref int Vorhanden, int IntNeu, string Feldname, int Min, int Max)
-        {
-            return KontrIntOk(ref Vorhanden, IntNeu, Feldname, Min, Max);
-        }
-
-        public static bool KontrIntOk(ref int? Vorhanden, int? IntNeu, string Feldname, int Min, int Max)
-        {
-            if (Vorhanden != IntNeu)
-            {
-                if (IntNeu == null)
-                    Vorhanden = IntNeu;
-                else
-                {
-                    var test = Convert.ToInt64(IntNeu);
-                    if (test < Min)
-                    {
-                        Fehler($"Für Feld {Feldname} muss die Zahl größer {Min} sein. ({IntNeu})");
-                        return false;
-                    }
-                    if (test > Max)
-                    {
-                        Fehler($"Für Feld {Feldname} muss die Zeichenanzahl kleiner {Max} sein. ({IntNeu})");
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        public static void Fehler(string FehlerText)
-        {
-
-        }
-
         public static string Konvert(object Wert, string Format = null)
         {
             if (Wert != null)
@@ -86,6 +35,12 @@ namespace JgDatevExportLib
             return "";
         }
 
+        public static string GetNameConfigDatei()
+        {
+            var dat = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            return System.IO.Path.GetDirectoryName(dat) + @"\JgDatevExport.config";
+        }
+
         public static string UnterstricheInWert(string Wert)
         {
             return Wert.Replace("_", " ").Replace("__", "//").Replace("___", "-");
@@ -95,22 +50,6 @@ namespace JgDatevExportLib
         {
             return "EXTF_" + DateiName + "_" + Datum.ToString("ddMMyy_mmHH") + ".csv";
         }
-
-        public static Dictionary<string, string> DatevFeldZuordnungAusString(string FelderAsString)
-        {
-            var erg = new Dictionary<string, string>();
-
-            var ds = FelderAsString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var felder in ds)
-            {
-                var spalten = felder.Split(new char[] { '|' });
-                erg.Add(spalten[0], spalten[1]);
-            }
-
-            return erg;
-        }
-
-        public static string DatevFeldZuordnungInString(Dictionary<string, string> Dic) => string.Join(";", Dic.Select(s => s.Key + "|" + s.Value));
 
         public static void DatenSpeichern(string DateiName, DatevHeader Header, DatevKoerper Koerper)
         {
@@ -136,7 +75,7 @@ namespace JgDatevExportLib
             }
         }
 
-        public static Tuple<DatevHeader, DatevKoerper> DatenLaden(string Dateiname)
+        public static (DatevHeader Header, DatevKoerper Koerper) DatenLaden(string Dateiname)
         {
             var fs = new FileStream(Dateiname, FileMode.Open);
             try
@@ -155,7 +94,7 @@ namespace JgDatevExportLib
                         koerper = (DatevKoerper)obj;
                 }
 
-                return new Tuple<DatevHeader, DatevKoerper>(header, koerper);
+                return (header, koerper);
             }
             catch (SerializationException e)
             {

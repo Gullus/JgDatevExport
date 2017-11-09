@@ -6,8 +6,10 @@ using static JgDatevExportLib.DatevEnum;
 
 namespace JgDatevExportLib
 {
+    [Serializable]
     public class DatevHeader : INotifyPropertyChanged, IListeAnzeige
     {
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
