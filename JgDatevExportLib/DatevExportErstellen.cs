@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using static JgDatevExportLib.DatevEnum;
 
 namespace JgDatevExportLib
 {
@@ -21,19 +17,24 @@ namespace JgDatevExportLib
 
         private List<string> _AusgabeKoerper = new List<string>();
         private string _Pfad = null;
+        private string _DatName = null;
 
-        public DatevExportErstellen(string Pfad)
+        public DatevExportErstellen(string Pfad, string DatName)
         {
-            var lad = Helper.DatenLaden(Helper.GetNameConfigDatei());
+            _Pfad = Pfad;
+            _DatName = DatName;
+
+            var lad = DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei());
             DatevHeader = lad.Header;
             _DatevKoerper = lad.Koerper;
             _Zuordnung.StringInFelder(_DatevKoerper.FelderZuordnungDatevExport);
         }
 
-        public void SetzeWert(DatevFeldZuordnung FeldZuordnung, object Wert)
+        public void SetzeWert<T>(EnumFelderZuordnung FeldZuordnung, T Wert)
         {
-            var info = typeof(DatevHeader).GetProperty(_Zuordnung[FeldZuordnung.ToString()]);
-            info.SetValue(_DatevKoerper, Wert);
+            var info = typeof(DatevKoerper).GetProperty(_Zuordnung[FeldZuordnung.ToString()]);
+            if (info != null)
+                info.SetValue(_DatevKoerper, Wert);
         }
 
         public void SchreibeDatensatz()
@@ -41,8 +42,15 @@ namespace JgDatevExportLib
             _AusgabeKoerper.Add(_DatevKoerper.ToString());
         }
 
+        public static string DateinameAusgabe(string Pfad, string DateiName)
+        {
+            return Pfad + @"\EXTF_" + DateiName + "_" + DateTime.Now.ToString("ddMMyy_mmHH") + ".csv";
+        }
+
         public void SchreibeInDatei()
         {
+            var datName = DateinameAusgabe(_Pfad, _DatName);
+
             var sb = new StringBuilder();
             sb.AppendLine(_DatevHeader.ToString());
             sb.AppendLine(Properties.Resource.KoerperHeader);
@@ -50,15 +58,15 @@ namespace JgDatevExportLib
                 sb.AppendLine(ds);
             try
             {
-                File.WriteAllText(_DateiName, sb.ToString());
+                File.WriteAllText(datName, sb.ToString());
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Fehler bei speichern der Datei '{_DateiName}'. \nGrund: {ex.Message}", "Fehler !", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Fehler bei speichern der Datei '{datName}'. \nGrund: {ex.Message}", "Fehler !", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            MessageBox.Show($"Datei '{_DateiName}' erfolgreich erstellt.", "Fehler !", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"Datei '{datName}' erfolgreich erstellt.", "Fehler !", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

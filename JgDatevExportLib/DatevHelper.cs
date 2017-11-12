@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace JgDatevExportLib
 {
-    public static class Helper
+    public static class DatevHelper
     {
         public static string Konvert(object Wert, string Format = null)
         {
@@ -37,8 +37,14 @@ namespace JgDatevExportLib
 
         public static string GetNameConfigDatei()
         {
-            var dat = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string dat = PfadProgramm();
             return System.IO.Path.GetDirectoryName(dat) + @"\JgDatevExport.config";
+        }
+
+        public static string PfadProgramm()
+        {
+            var m = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            return Path.GetDirectoryName(m) + @"\";
         }
 
         public static string UnterstricheInWert(string Wert)
@@ -46,18 +52,14 @@ namespace JgDatevExportLib
             return Wert.Replace("_", " ").Replace("__", "//").Replace("___", "-");
         }
 
-        public static string DateinameErstellen(string DateiName, DateTime Datum)
-        {
-            return "EXTF_" + DateiName + "_" + Datum.ToString("ddMMyy_mmHH") + ".csv";
-        }
-
         public static void DatenSpeichern(string DateiName, DatevHeader Header, DatevKoerper Koerper)
         {
+            var fs = new FileStream(DateiName, FileMode.Create);
+
             var arrList = new ArrayList();
             arrList.Add(Header);
             arrList.Add(Koerper);
 
-            var fs = new FileStream(DateiName, FileMode.Create);
             var formatter = new BinaryFormatter();
 
             try
@@ -75,11 +77,14 @@ namespace JgDatevExportLib
             }
         }
 
-        public static (DatevHeader Header, DatevKoerper Koerper) DatenLaden(string Dateiname)
+        public static (DatevHeader Header, DatevKoerper Koerper) DatenLaden(string DateiName)
         {
-            var fs = new FileStream(Dateiname, FileMode.Open);
+            FileStream fs = null;
+
             try
             {
+                fs = new FileStream(DateiName, FileMode.Open);
+
                 BinaryFormatter formatter = new BinaryFormatter();
                 var arrList = (ArrayList)formatter.Deserialize(fs);
 
@@ -103,7 +108,7 @@ namespace JgDatevExportLib
             }
             finally
             {
-                fs.Close();
+                fs?.Close();
             }
         }
     }

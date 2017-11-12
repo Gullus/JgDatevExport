@@ -93,11 +93,9 @@ namespace JgDatevExportLib
 
             if (type == typeof(string))
             {
-                if (wert != null)
-                    return "\"" + wert.ToString() + "\"";
-
-                if (attr.IstErforderlich)
-                    return "\"\"";
+                if (wert == null)
+                    wert = "";
+                return "\"" + wert.ToString() + "\"";
             }
             else if ((type == typeof(int)) || (type == typeof(int?)))
             {
@@ -122,8 +120,6 @@ namespace JgDatevExportLib
             }
             else
             {
-                var ar = Enum.GetNames(type);
-
                 var ss = wert.ToString();
                 if (ss != "leer")
                 {
@@ -132,15 +128,17 @@ namespace JgDatevExportLib
                         case JgInfoAttribute.AnzeigeEnums.AlsZahl:
                             return Convert.ToString((byte)wert);
                         case JgInfoAttribute.AnzeigeEnums.AlsString:
-                            return ss;
+                            return "\"" + ss + "\"";
                         case JgInfoAttribute.AnzeigeEnums.ErsterBuchstabe:
-                            return ss[0].ToString();
+                            return "\"" + ss[0].ToString() + "\"";
                         case JgInfoAttribute.AnzeigeEnums.ErsteZweiBuchstaben:
-                            return ss[0].ToString() + ss[1].ToString();
+                            return "\"" + ss[0].ToString() + ss[1].ToString() + "\"";
                         case JgInfoAttribute.AnzeigeEnums.LetztesZeichen:
-                            return ss[ss.Length].ToString();
+                            return ss[ss.Length - 1].ToString();
                     }
                 }
+                else
+                    return attr.AnzeigeEnum == JgInfoAttribute.AnzeigeEnums.AlsZahl ? "" : "\"\"";
             }
 
             return "";

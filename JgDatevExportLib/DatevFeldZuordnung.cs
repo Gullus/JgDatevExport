@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static JgDatevExportLib.DatevEnum;
 
 namespace JgDatevExportLib
 {
@@ -10,21 +11,6 @@ namespace JgDatevExportLib
         {
             DatevModus,
             FelderEintragen
-        }
-
-        public enum FelderZuordnung
-        {
-            Konto,
-            SollHaben,
-            Kost_1,
-            Kost_2,
-            Wert,
-            Belegnummer,
-            Skonto,
-            FirmaNummer,
-            FirmaName,
-            BuchungsDatum,
-            BelegDatum
         }
 
         public string this[string Feld]

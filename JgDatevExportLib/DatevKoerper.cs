@@ -151,7 +151,7 @@ namespace JgDatevExportLib
         // Umsatz(ohne Soll/Haben-Kz)
 
         [JgInfo(true, 13, Format = "N2")]
-        private decimal _Umsatz = 39.90m;
+        private decimal _Umsatz = 0m;
         public decimal Umsatz
         {
             get => _Umsatz;
@@ -204,7 +204,7 @@ namespace JgDatevExportLib
 
         // WKZ Basis-Umsatz
 
-        [JgInfo(false)]
+        [JgInfo(false, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString)]
         private EnumWaehrung _WkzBasisUmsatz = EnumWaehrung.leer;
         public EnumWaehrung WkzBasisUmsatz { get => _WkzBasisUmsatz; set => _WkzBasisUmsatz = value; }
 
@@ -779,7 +779,6 @@ namespace JgDatevExportLib
             }
         }
 
-
         // Identifikationsnummer
 
         [JgInfo(false, 11)]
@@ -882,7 +881,7 @@ namespace JgDatevExportLib
             sb.Append(this.JgDruck(v => v._BelegLink) + ";"); ;
 
             foreach (var belegInfo in this._BelegInfo)
-                sb.Append(belegInfo.BeleginfoArt + ";" + belegInfo.BeleginfoInhalt + ";");
+                sb.Append("\"" + belegInfo.BeleginfoArt + "\";\"" + belegInfo.BeleginfoInhalt + "\"" + ";");
 
             sb.Append(this.JgDruck(v => v._Kost1) + ";");
             sb.Append(this.JgDruck(v => v._Kost2) + ";");
@@ -897,7 +896,7 @@ namespace JgDatevExportLib
             sb.Append(this.JgDruck(v => v._Bu49Funktionsergänzung) + ";"); ;
 
             foreach (var zusatzInfo in this._ZusatzInformation)
-                sb.Append(zusatzInfo.ZusatzinformationArt + ";" + zusatzInfo.ZusatzinformationInhalt + ";");
+                sb.Append("\"" + zusatzInfo.ZusatzinformationArt + "\";\"" + zusatzInfo.ZusatzinformationInhalt + "\"" + ";");
 
             sb.Append(this.JgDruck(v => v._Stueck) + ";");
             sb.Append(this.JgDruck(v => v._Gewicht) + ";");
@@ -927,7 +926,7 @@ namespace JgDatevExportLib
             sb.Append(this.JgDruck(v => v._KennzeichenSoBilBuchung) + ";");
             sb.Append(this.JgDruck(v => v._Festschreibung) + ";");
             sb.Append(this.JgDruck(v => v._Leistungsdatum) + ";");
-            sb.Append(this.JgDruck(v => v._DatumZuordnungSteuerperiode) + ";");
+            sb.Append(this.JgDruck(v => v._DatumZuordnungSteuerperiode));
 
             return sb.ToString();
         }

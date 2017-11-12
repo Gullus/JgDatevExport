@@ -5,88 +5,51 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static JgDatevExportLib.DatevEnum;
 
 namespace TestConsole
 {
     namespace ConsoleApplication1
     {
-        //[AttributeUsage(AttributeTargets.Property)]
-        //public class StringLaengeAttribute : Attribute
-        //{
-        //    public int Max { get; set; }
-
-        //    public StringLaengeAttribute()
-        //    { }
-        //}
-
-        //public static class MyClassExtensions
-        //{
-        //    public static int GetStringLaengeAttribute<T>(this T obj, Expression<Func<T, string>> value)
-        //    {
-        //        var memberExpression = value.Body as MemberExpression;
-        //        var attr = memberExpression.Member.GetCustomAttributes(typeof(StringLaengeAttribute), true);
-        //        return ((StringLaengeAttribute)attr[0]).Max;
-        //    }
-
-        //    public static string MeinTester<T>(this T obj, Expression<Func<T, string>> value, string Zusatzwert)
-        //    {
-        //        var mExpression = (MemberExpression)value.Body;
-        //        var type = obj.GetType();
-        //        var prop = type.GetProperty(mExpression.Member.Name);
-        //        var wert =  prop.GetValue(obj);
-        //        return $"Feld: {mExpression.Member.Name} Wert: {wert} {Zusatzwert}";
-        //    }
-        //}
-
-        //public  class MyTest
-        //{
-        //    [StringLaenge(Max = 23)]
-        //    public string TestString { get; set; } = "Hallo Ballo";
-        //}
-
         class Program
         {
 
             static void Main(string[] args)
             {
+                var pfad = DatevHelper.PfadProgramm();
 
-                var koerper = new DatevHeader();
+                try
+                {
+                    var erst = new DatevExportErstellen(pfad, "Buch_1");
 
-                Console.WriteLine(koerper.ToString());
+                    erst.DatevHeader.DatumVon = DateTime.Now.AddDays(-1);
+                    erst.DatevHeader.DatumBis = DateTime.Now.AddDays(1);
 
-                var erg = koerper.ListeAnzeigeErstellen();
+                    erst.DatevHeader.ErzeugtAm = DateTime.Now;
+                    erst.DatevHeader.DiktatKürzel = "JG";
 
-                //Console.WriteLine(Properties.Resource.ResourceManager.GetString("String1"));
 
-                Console.ReadKey();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        erst.SetzeWert<Decimal>(DatevEnum.EnumFelderZuordnung.Umsatz, 10.358m);
+                        erst.SetzeWert<EnumSollHaben>(DatevEnum.EnumFelderZuordnung.SollHaben, EnumSollHaben.Soll);
+                        erst.SetzeWert<String>(DatevEnum.EnumFelderZuordnung.Konto,"12343432");
+
+                        erst.SetzeWert<String>(DatevEnum.EnumFelderZuordnung.GegenKonto, "258624587");
+                        erst.SetzeWert<DateTime>(DatevEnum.EnumFelderZuordnung.BelegDatum, DateTime.Now);
+
+                        erst.SetzeWert<String>(EnumFelderZuordnung.Belegnummer, "123" + i.ToString());
+
+                        erst.SchreibeDatensatz();
+                    }
+
+                    erst.SchreibeInDatei();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }
-
-
-
-    //class Program
-    //{
-    //    //static void Main(string[] args)
-    //    //{
-    //    //    var t = new DatevHeader();
-    //    //    Console.WriteLine(t.ToString());
-
-    //    //    Console.ReadKey();
-
-    //    //}
-
-    //    //public static int Max(string PropName)
-    //    //{
-    //    //    var t = typeof(DatevHeader);
-    //    //    var p = t.GetProperty(PropName);    
-
-    //    //    if (p.GetCustomAttributes(typeof(StringLengthAttribute), false).Length > 0)
-    //    //    {
-    //    //        var attr = (StringLengthAttribute)p.GetCustomAttributes(typeof(StringLengthAttribute), true)[0];
-    //    //        return attr.Max;
-    //    //    }
-    //    //    return -1;
-    //    //}
-    //}
 }

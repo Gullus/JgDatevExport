@@ -29,10 +29,15 @@ namespace JgDatevExportAnzeige
 
         private void RibbonWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var lad = Helper.DatenLaden(Helper.GetNameConfigDatei());
-            _DatevHeader = lad.Header;
-            _DatevKoerper = lad.Koerper;
-            _Zuordnung.StringInFelder(_DatevKoerper.FelderZuordnungDatevExport);
+            // Wenn öffnen Fehlschlägt, werden die Objekte mit Vorgeben genommen.
+            try
+            {
+                var lad = DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei());
+                _DatevHeader = lad.Header;
+                _DatevKoerper = lad.Koerper;
+                _Zuordnung.StringInFelder(_DatevKoerper.FelderZuordnungDatevExport);
+            }
+            catch { }
 
             _VsAnzeigeDaten.Source = _DatevHeader.ListeAnzeigeErstellen();
         }
@@ -75,7 +80,7 @@ namespace JgDatevExportAnzeige
             CommandBindings.Add(new CommandBinding(MyCommands.Speichern, (sen, erg) =>
             {
                 _DatevKoerper.FelderZuordnungDatevExport = _Zuordnung.ToString();
-                Helper.DatenSpeichern(Helper.GetNameConfigDatei(), _DatevHeader, _DatevKoerper);
+                DatevHelper.DatenSpeichern(DatevHelper.GetNameConfigDatei(), _DatevHeader, _DatevKoerper);
             }));
 
             CommandBindings.Add(new CommandBinding(MyCommands.Beenden, (sen, erg) =>

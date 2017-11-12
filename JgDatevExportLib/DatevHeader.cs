@@ -18,7 +18,7 @@ namespace JgDatevExportLib
         }
 
         [JgInfo(true, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.AlsString)]
-        private EnumDatevFormat _DatevFormatKz = EnumDatevFormat.DTVF;
+        private EnumDatevFormat _DatevFormatKz = EnumDatevFormat.EXTF;
         /// <summary>
         /// EXTF = für Dateiformate, die von externen Programmen erstellt wurden
         /// DTVF = für DATEV reserviert
@@ -26,7 +26,7 @@ namespace JgDatevExportLib
         public EnumDatevFormat DatevFormatKz { get => _DatevFormatKz; set => _DatevFormatKz = value; }
 
         [JgInfo(true, 999)]
-        private int _Versionsnummer = 1;
+        private int _Versionsnummer = 510;
         /// <summary>
         /// Versionsnummer des Headers.
         /// Ergeben sich künftig Änderungen am Aufbau des Headers(z.B.zusätzliche Felder), kann dieser über die Headerversion abwärtskompatibel verarbeitet werden.
@@ -49,7 +49,7 @@ namespace JgDatevExportLib
         private EnumFormatname _FormatName = EnumFormatname.Buchungsstapel;
         public EnumFormatname FormatName { get => _FormatName; set => _FormatName = value; }   // Unterstriche umwandeln !
 
-        [JgInfo(true)]
+        [JgInfo(true, AnzeigeEnum = JgInfoAttribute.AnzeigeEnums.LetztesZeichen)]
         private EnumFormatversion _FormatVersion = EnumFormatversion.Buchungsstapel_7;
         /// <summary>
         /// Versionsnummer des Formats. Ergeben sich künftig Änderungen am Aufbau des Formats(z.B.neue Felder), kann dies über die Formatversion abwärtskompatibel verarbeitet werden.
@@ -122,9 +122,9 @@ namespace JgDatevExportLib
             }
         }
 
-        [JgInfo(true, 9999999)]
-        private int _BeraterNummer = 0;
-        public int Beraternummer
+        [JgInfo(true, 1001, 9999999)]
+        private int _BeraterNummer = 1001;
+        public int BeraterNummer
         {
             get => _BeraterNummer;
             set
@@ -134,8 +134,8 @@ namespace JgDatevExportLib
             }
         }
 
-        [JgInfo(true, 99999)]
-        private int _MandantenNummer = 0;
+        [JgInfo(true, 1, 99999)]
+        private int _MandantenNummer = 1;
         public int MandantenNummer
         {
             get => _MandantenNummer;
@@ -264,7 +264,7 @@ namespace JgDatevExportLib
             return this.JgDruck(v => v._DatevFormatKz) + ";"
                 + this.JgDruck(v => v._Versionsnummer) + ";"
                 + this.JgDruck(v => v._DatenKategorie) + ";"
-                + Helper.UnterstricheInWert(this.JgDruck(v => v._FormatName)) + ";"
+                + DatevHelper.UnterstricheInWert(this.JgDruck(v => v._FormatName)) + ";"
                 + this.JgDruck(v => v._FormatVersion) + ";"
                 + this.JgDruck(v => v._ErzeugtAm) + ";"
                 + this.JgDruck(v => v._Importiert) + ";"
