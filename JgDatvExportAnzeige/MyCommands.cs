@@ -17,7 +17,7 @@ namespace JgDatevExportAnzeige
         }
 
         private static RoutedUICommand _BelegInfoAnzeigen;
-        public static RoutedUICommand BeleginfoAnzeigen
+        public static RoutedUICommand BelegInformationAnzeigen
         {
             get { return _BelegInfoAnzeigen; }
         }

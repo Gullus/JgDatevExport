@@ -65,7 +65,7 @@ namespace JgDatevExportAnzeige
                 _VsAnzeigeDaten.Source = lAnzeige;
             }, (sen, erg) => erg.CanExecute = _AuswahlAnzeige != EnumAuswahlAnzeige.Koerper));
 
-            CommandBindings.Add(new CommandBinding(MyCommands.BeleginfoAnzeigen, (sen, erg) =>
+            CommandBindings.Add(new CommandBinding(MyCommands.BelegInformationAnzeigen, (sen, erg) =>
             {
                 var fo = new FormEditBelegInfo(_DatevKoerper);
                 fo.Show();
@@ -73,7 +73,7 @@ namespace JgDatevExportAnzeige
 
             CommandBindings.Add(new CommandBinding(MyCommands.ZusatzInformationAnzeigen, (sen, erg) =>
             {
-                var fo = new FormEditBelegInfo(_DatevKoerper);
+                var fo = new FormEditZusatzInfo(_DatevKoerper);
                 fo.Show();
             }));
 

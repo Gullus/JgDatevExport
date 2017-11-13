@@ -71,6 +71,10 @@
       <DependentUpon>FormAnzeige.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="FormEditZusatzInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="FormEditBelegInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -89,6 +93,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormEditZusatzInfo.xaml.cs">
+      <DependentUpon>FormEditZusatzInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FormEditBelegInfo.xaml.cs">
       <DependentUpon>FormEditBelegInfo.xaml</DependentUpon>
     </Compile>

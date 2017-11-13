@@ -36,7 +36,7 @@
 
                     <RibbonApplicationMenuItem Header="Header anzeigen" Command="{x:Static local:MyCommands.HeaderAnzeigen}" ImageSource="Bilder\JgPreview.ico"/>
                     <RibbonApplicationMenuItem Header="Körper anzeigen" Command="{x:Static local:MyCommands.KoerperAnzeigen}" ImageSource="Bilder\JgCopy.ico"/>
-                    <RibbonApplicationMenuItem Header="BelegInfo anzeigen" Command="{x:Static local:MyCommands.BeleginfoAnzeigen}" ImageSource="Bilder\JgCopy.ico" />
+                    <RibbonApplicationMenuItem Header="BelegInfo anzeigen" Command="{x:Static local:MyCommands.BelegInformationAnzeigen}" ImageSource="Bilder\JgCopy.ico" />
                     <RibbonApplicationMenuItem Header="ZusatzInfo anzeigen" Command="{x:Static local:MyCommands.ZusatzInformationAnzeigen}" ImageSource="Bilder\JgCopy.ico" />
                     <RibbonSeparator/>
                     <RibbonApplicationMenuItem Header="Daten laden" Command="{x:Static local:MyCommands.Laden}" ImageSource="Bilder\JgNew.ico" />
@@ -49,7 +49,7 @@
                 <RibbonGroup Header="Anzeigen">
                     <RibbonButton Label="Header" Command="{x:Static local:MyCommands.HeaderAnzeigen}" LargeImageSource="Bilder\JgPreview.ico" />
                     <RibbonButton Label="Koerper"  Command="{x:Static local:MyCommands.KoerperAnzeigen}" LargeImageSource="Bilder\JgCopy.ico"/>
-                    <RibbonButton Label="Beleg Info" Command="{x:Static local:MyCommands.BeleginfoAnzeigen}" LargeImageSource="Bilder\JgCopy.ico"/>
+                    <RibbonButton Label="Beleg Info" Command="{x:Static local:MyCommands.BelegInformationAnzeigen}" LargeImageSource="Bilder\JgCopy.ico"/>
                     <RibbonButton Label="Zusatz Information" Command="{x:Static local:MyCommands.ZusatzInformationAnzeigen}" LargeImageSource="Bilder\JgCopy.ico"/>
                 </RibbonGroup>
                 <RibbonGroup Header="Aktualisieren">

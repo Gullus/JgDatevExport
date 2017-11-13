@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:JgDatevExportLib="clr-namespace:JgDatevExportLib;assembly=JgDatevExportLib" x:Class="JgDatevExportAnzeige.FormEditBelegInfo"
+        xmlns:JgDatevExportLib="clr-namespace:JgDatevExportLib;assembly=JgDatevExportLib" x:Class="JgDatevExportAnzeige.FormEditZusatzInfo"
         mc:Ignorable="d"
-        Title="Jg DatevExport - Beleginformationen" Height="300" Width="497" Loaded="Window_Loaded" ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
+        Title="Jg DatevExport - Zusatzinformationen" Height="300" Width="497" Loaded="Window_Loaded" ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
     
     <Window.Resources>
-        <CollectionViewSource x:Key="vsZusatzInfo" d:DesignSource="{d:DesignInstance {x:Type JgDatevExportLib:DsBelegInformation}, CreateList=True}"/>
+        <CollectionViewSource x:Key="vsZusatzInfo" d:DesignSource="{d:DesignInstance {x:Type JgDatevExportLib:DsZusatzInformation}, CreateList=True}"/>
     </Window.Resources>
 
     <Grid Margin="5" DataContext="{StaticResource vsZusatzInfo}">
@@ -26,14 +26,14 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="30"/>
                 <DataGridTextColumn Header="Feldname" Binding="{Binding Feldname}" Width="100"/>
-                <DataGridTextColumn Width="*" Header="Art" Binding="{Binding BeleginfoArt}">
+                <DataGridTextColumn Width="*" Header="Art" Binding="{Binding ZusatzinformationArt}">
                     <DataGridTextColumn.EditingElementStyle>
                         <Style TargetType="TextBox">
                             <Setter Property="MaxLength" Value="20" />
                         </Style>
                     </DataGridTextColumn.EditingElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Width="4*" Header="Inhalt" Binding="{Binding BeleginfoInhalt}">
+                <DataGridTextColumn Width="4*" Header="Inhalt" Binding="{Binding ZusatzinformationInhalt}">
                     <DataGridTextColumn.EditingElementStyle>
                         <Style TargetType="TextBox">
                             <Setter Property="MaxLength" Value="220" />

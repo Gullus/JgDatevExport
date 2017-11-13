@@ -26,7 +26,7 @@ namespace JgDatevExportAnzeige
 
         private void Click_Fertig(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.DialogResult = true;
         }
     }
 }

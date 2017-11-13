@@ -20,7 +20,7 @@ namespace JgDatevExportLib
     }
 
     [Serializable]
-    public class TBelegInfo : TStamm, INotifyPropertyChanged
+    public class DsBelegInformation : TStamm, INotifyPropertyChanged
     {
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
@@ -64,7 +64,7 @@ namespace JgDatevExportLib
     }
 
     [Serializable]
-    public class TZusatzInformation : TStamm, INotifyPropertyChanged
+    public class DsZusatzInformation : TStamm, INotifyPropertyChanged
     {
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
@@ -127,7 +127,7 @@ namespace JgDatevExportLib
         public void FelderArrayMitNummerUndFeldBelegen()
         {
             for (int i = 0; i < 8; i++)
-                _BelegInfo[i] = new TBelegInfo()
+                _BelegInfo[i] = new DsBelegInformation()
                 {
                     Id = 21 + (i * 2),
                     Feldname = "Beleginfo " + (i + 1).ToString()
@@ -136,7 +136,7 @@ namespace JgDatevExportLib
 
             for (int i = 0; i < 20; i++)
             {
-                _ZusatzInformation[i] = new TZusatzInformation()
+                _ZusatzInformation[i] = new DsZusatzInformation()
                 {
                     Id = 48 + (i * 2),
                     Feldname = "ZusatzInfo " + (i + 1).ToString()
@@ -382,8 +382,8 @@ namespace JgDatevExportLib
 
         // Beleginfo-Art und Inhalt 1 - 8 ********
 
-        private TBelegInfo[] _BelegInfo = new TBelegInfo[8];
-        public TBelegInfo[] BelegInfo { get => _BelegInfo; set => _BelegInfo = value; }
+        private DsBelegInformation[] _BelegInfo = new DsBelegInformation[8];
+        public DsBelegInformation[] BelegInfo { get => _BelegInfo; set => _BelegInfo = value; }
 
         // KOST1-Kostenstelle
 
@@ -533,8 +533,8 @@ namespace JgDatevExportLib
 
         // Zusatzinformation-Art und Inhalt 1 - 20 ********
 
-        private TZusatzInformation[] _ZusatzInformation = new TZusatzInformation[20];
-        public TZusatzInformation[] ZusatzInformation { get => _ZusatzInformation; set => _ZusatzInformation = value; }
+        private DsZusatzInformation[] _ZusatzInformation = new DsZusatzInformation[20];
+        public DsZusatzInformation[] ZusatzInformation { get => _ZusatzInformation; set => _ZusatzInformation = value; }
 
         // Stück
 
