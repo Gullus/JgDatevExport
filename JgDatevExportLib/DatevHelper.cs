@@ -77,7 +77,7 @@ namespace JgDatevExportLib
             }
         }
 
-        public static (DatevHeader Header, DatevKoerper Koerper) DatenLaden(string DateiName)
+        public static void DatenLaden(string DateiName, ref DatevHeader Header, ref DatevKoerper Koerper)
         {
             FileStream fs = null;
 
@@ -88,18 +88,13 @@ namespace JgDatevExportLib
                 BinaryFormatter formatter = new BinaryFormatter();
                 var arrList = (ArrayList)formatter.Deserialize(fs);
 
-                DatevHeader header = null;
-                DatevKoerper koerper = null;
-
                 foreach (var obj in arrList)
                 {
                     if (obj is DatevHeader)
-                        header = (DatevHeader)obj;
+                        Header = (DatevHeader)obj;
                     else if (obj is DatevKoerper)
-                        koerper = (DatevKoerper)obj;
+                        Koerper = (DatevKoerper)obj;
                 }
-
-                return (header, koerper);
             }
             catch (SerializationException e)
             {

@@ -25,7 +25,7 @@ namespace JgDatevExportLib
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        private void NotifyPropertyChanged(string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -39,7 +39,7 @@ namespace JgDatevExportLib
                 if (_BeleginfoArt != value)
                 {
                     _BeleginfoArt = value;
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("BeleginfoArt");
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace JgDatevExportLib
                 if (_BeleginfoInhalt != value)
                 {
                     _BeleginfoInhalt = value;
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("AnwendungsInformation");
                 }
             }
         }
@@ -69,7 +69,7 @@ namespace JgDatevExportLib
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        private void NotifyPropertyChanged(string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -83,7 +83,7 @@ namespace JgDatevExportLib
                 if (_ZusatzinformationArt != value)
                 {
                     _ZusatzinformationArt = value;
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("ZusatzinformationArt");
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace JgDatevExportLib
                 if (_ZusatzinformationInhalt != value)
                 {
                     _ZusatzinformationInhalt = value;
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("ZusatzinformationInhalt");
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace JgDatevExportLib
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        private void NotifyPropertyChanged(string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -150,7 +150,7 @@ namespace JgDatevExportLib
 
         // Umsatz(ohne Soll/Haben-Kz)
 
-        [JgInfo(true, 13, Format = "N2")]
+        [JgInfo(true, 99999999, Format = "N2")]
         private decimal _Umsatz = 0m;
         public decimal Umsatz
         {
@@ -158,7 +158,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Umsatz, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Umsatz");
             }
         }
 
@@ -184,7 +184,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Kurs, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Kurs");
             }
         }
 
@@ -198,7 +198,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._BasisUmsatz, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("BasisUmsatz");
             }
         }
 
@@ -218,7 +218,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Konto, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Konto");
             }
         }
 
@@ -232,7 +232,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._GegenKonto, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("GegenKonto");
             }
         }
 
@@ -246,7 +246,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._BuSchluessel, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("BuSchluessel");
             }
         }
 
@@ -266,7 +266,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Belegfeld1, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Belegfeld1");
             }
         }
 
@@ -280,7 +280,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Belegfeld2, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Belegfeld2");
             }
         }
 
@@ -294,7 +294,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Skonto, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Skonto");
             }
         }
 
@@ -308,7 +308,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Buchungstext, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Buchungstext");
             }
         }
 
@@ -328,7 +328,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._DiverseAdressNummer, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("DiverseAdressNummer");
             }
         }
 
@@ -342,7 +342,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._GeschäftspartnerBank, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("GeschäftspartnerBank");
             }
         }
 
@@ -356,7 +356,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Sachverhalt, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Sachverhalt");
             }
         }
 
@@ -376,7 +376,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._BelegLink, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("BelegLink");
             }
         }
 
@@ -395,7 +395,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Kost1, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Kost1");
             }
         }
 
@@ -409,7 +409,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Kost2, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Kost2");
             }
         }
 
@@ -423,7 +423,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._KostMenge, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("KostMenge");
             }
         }
 
@@ -437,7 +437,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._EuMitgliedsStaatUStId, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("EuMitgliedsStaatUStId");
             }
         }
 
@@ -451,7 +451,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._EuSteuersatz, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("EuSteuersatz");
             }
         }
 
@@ -471,7 +471,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Sachverhalt_L_L, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Sachverhalt_L_L");
             }
         }
 
@@ -485,7 +485,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._FunktionsErgänzung_L_L, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("FunktionsErgänzung_L_L");
             }
         }
 
@@ -499,7 +499,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Bu49Hauptfunktionstyp, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Bu49Hauptfunktionstyp");
             }
         }
 
@@ -513,7 +513,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Bu49Hauptfunktionsnummer, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Bu49Hauptfunktionsnummer");
             }
         }
 
@@ -527,7 +527,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Bu49Funktionsergänzung, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Bu49Funktionsergänzung");
             }
         }
 
@@ -546,7 +546,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Stueck, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Stueck");
             }
         }
 
@@ -560,7 +560,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Gewicht, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Gewicht");
             }
         }
 
@@ -580,7 +580,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._ForderungsArt, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("ForderungsArt");
             }
         }
 
@@ -594,7 +594,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Veranlagungsjahr, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Veranlagungsjahr");
             }
         }
 
@@ -620,7 +620,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Auftragsnummer, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Auftragsnummer");
             }
         }
 
@@ -640,7 +640,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._UstSchluesselAnzahlungen, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("UstSchluesselAnzahlungen");
             }
         }
 
@@ -654,7 +654,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._EuMitgliedstaatAnzahlungen, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("EuMitgliedstaatAnzahlungen");
             }
         }
 
@@ -668,7 +668,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Sachverhalt_L_L_Anzahlungen, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Sachverhalt_L_L_Anzahlungen");
             }
         }
 
@@ -682,7 +682,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._EuSteuersatzAnzahlungen, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("EuSteuersatzAnzahlungen");
             }
         }
 
@@ -696,7 +696,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._ErloeskontoAnzahlungen, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("ErloeskontoAnzahlungen");
             }
         }
 
@@ -710,7 +710,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._HerkunftKfz, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("HerkunftKfz");
             }
         }
 
@@ -735,7 +735,7 @@ namespace JgDatevExportLib
             get => _SepaMandatsreferenz; set
             {
                 if (this.GetJgInfoAttribute(v => v._SepaMandatsreferenz, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("SepaMandatsreferenz");
             }
         }
 
@@ -748,7 +748,7 @@ namespace JgDatevExportLib
             get => _Skontosperre; set
             {
                 if (this.GetJgInfoAttribute(v => v._Skontosperre, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Skontosperre");
             }
         }
 
@@ -762,7 +762,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._GesellschafterName, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("GesellschafterName");
             }
         }
 
@@ -775,7 +775,7 @@ namespace JgDatevExportLib
             get => _BeteiligtenNummer; set
             {
                 if (this.GetJgInfoAttribute(v => v._BeteiligtenNummer, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("BeteiligtenNummer");
             }
         }
 
@@ -788,7 +788,7 @@ namespace JgDatevExportLib
             get => _IdentifikationsNummer; set
             {
                 if (this.GetJgInfoAttribute(v => v._IdentifikationsNummer, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("IdentifikationsNummer");
             }
         }
 
@@ -801,7 +801,7 @@ namespace JgDatevExportLib
             get => _ZeichnerNummer; set
             {
                 if (this.GetJgInfoAttribute(v => v._ZeichnerNummer, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("ZeichnerNummer");
             }
         }
 
@@ -820,7 +820,7 @@ namespace JgDatevExportLib
             get => _BezeichnungSoBilSachverhalt; set
             {
                 if (this.GetJgInfoAttribute(v => v._BezeichnungSoBilSachverhalt, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("BezeichnungSoBilSachverhalt");
             }
         }
 
@@ -833,7 +833,7 @@ namespace JgDatevExportLib
             get => _KennzeichenSoBilBuchung; set
             {
                 if (this.GetJgInfoAttribute(v => v._KennzeichenSoBilBuchung, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("KennzeichenSoBilBuchung");
             }
         }
 

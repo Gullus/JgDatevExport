@@ -12,7 +12,7 @@ namespace JgDatevExportLib
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        private void NotifyPropertyChanged(string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -37,7 +37,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Versionsnummer, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Versionsnummer");
             }
         }
 
@@ -71,7 +71,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Importiert, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Importiert");
             }
         }   // Wird beim Import in Datev belegt
 
@@ -87,7 +87,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Herkunft, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Herkunft");
             }
         }
 
@@ -102,7 +102,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._ExportiertVon, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("ExportiertVon");
             }
         }
 
@@ -118,7 +118,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._ImportiertVon, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("ImportiertVon");
             }
         }
 
@@ -130,7 +130,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._BeraterNummer, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("BeraterNummer");
             }
         }
 
@@ -142,7 +142,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._MandantenNummer, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("MandantenNummer");
             }
         }
 
@@ -186,7 +186,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._Bezeichnung, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Bezeichnung");
             }
         }
 
@@ -202,7 +202,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._DiktatKürzel, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("DiktatKürzel");
             }
         }
 
@@ -255,7 +255,7 @@ namespace JgDatevExportLib
             set
             {
                 if (this.GetJgInfoAttribute(v => v._AnwendungsInformation, value))
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("AnwendungsInformation");
             }
         }
 

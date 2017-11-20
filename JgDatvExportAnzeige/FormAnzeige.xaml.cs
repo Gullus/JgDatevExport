@@ -32,9 +32,7 @@ namespace JgDatevExportAnzeige
             // Wenn öffnen Fehlschlägt, werden die Objekte mit Vorgeben genommen.
             try
             {
-                var lad = DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei());
-                _DatevHeader = lad.Header;
-                _DatevKoerper = lad.Koerper;
+                DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei(), ref _DatevHeader, ref _DatevKoerper);
                 _Zuordnung.StringInFelder(_DatevKoerper.FelderZuordnungDatevExport);
             }
             catch { }

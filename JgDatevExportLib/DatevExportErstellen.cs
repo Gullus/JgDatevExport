@@ -13,6 +13,8 @@ namespace JgDatevExportLib
         public DatevHeader DatevHeader { get => _DatevHeader; set => _DatevHeader = value; }
 
         private DatevKoerper _DatevKoerper = new DatevKoerper();
+        public DatevKoerper DatevKoerper { get => _DatevKoerper; set => _DatevKoerper = value; }
+
         private DatevFeldZuordnung _Zuordnung = new DatevFeldZuordnung(DatevFeldZuordnung.ZuordnungArt.FelderEintragen);
 
         private List<string> _AusgabeKoerper = new List<string>();
@@ -24,22 +26,31 @@ namespace JgDatevExportLib
             _Pfad = Pfad;
             _DatName = DatName;
 
-            var lad = DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei());
-            DatevHeader = lad.Header;
-            _DatevKoerper = lad.Koerper;
-            _Zuordnung.StringInFelder(_DatevKoerper.FelderZuordnungDatevExport);
+            DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei(), ref _DatevHeader, ref _DatevKoerper);
+            _Zuordnung.StringInFelder(DatevKoerper.FelderZuordnungDatevExport);
         }
 
-        public void SetzeWert<T>(EnumFelderZuordnung FeldZuordnung, T Wert)
+        public void SetzeWert(EnumFelderZuordnung FeldZuordnung, string Wert)
         {
-            var info = typeof(DatevKoerper).GetProperty(_Zuordnung[FeldZuordnung.ToString()]);
-            if (info != null)
-                info.SetValue(_DatevKoerper, Wert);
+            var feld = _Zuordnung[FeldZuordnung.ToString()];
+            if (feld != "-")
+            {
+                var info = typeof(DatevKoerper).GetProperty(feld);
+                if (info != null)
+                {
+                    if (info.PropertyType == typeof(Decimal))
+                        info.SetValue(DatevKoerper, Convert.ToDecimal(Wert), null);
+                    else if (info.PropertyType == typeof(DateTime))
+                        info.SetValue(DatevKoerper, Convert.ToDateTime(Wert), null);
+                    else
+                        info.SetValue(DatevKoerper, Wert, null);
+                }
+            }
         }
 
         public void SchreibeDatensatz()
         {
-            _AusgabeKoerper.Add(_DatevKoerper.ToString());
+            _AusgabeKoerper.Add(DatevKoerper.ToString());
         }
 
         public static string DateinameAusgabe(string Pfad, string DateiName)

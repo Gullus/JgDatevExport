@@ -63,7 +63,7 @@ namespace JgDatevExportLib
 
         public override string ToString()
         {
-            return string.Join(";", _DicZuordnung.Select(s => s.Key + "|" + s.Value));
+            return string.Join(";", _DicZuordnung.Select(s => s.Key + "|" + s.Value).ToArray());
         }
     }
 }

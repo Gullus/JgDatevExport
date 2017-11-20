@@ -14,7 +14,7 @@ namespace JgDatevExportLib
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        public void NotifyPropertyChanged(string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -44,7 +44,7 @@ namespace JgDatevExportLib
                 if (value != _FeldWert)
                 {
                     _FeldWert = value;
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("FeldWert");
                 }
             }
         }

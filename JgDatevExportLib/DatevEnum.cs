@@ -32,7 +32,7 @@ namespace JgDatevExportLib
             Wiederkehrende_Buchungen,
             Buchungstextkonstanten,
             Kontenbeschriftungen,
-            Debitoren__Kreditoen,       // __ => /
+            Debitoren__Kreditoen,                       // __ => /
             Textschlüsssel,
             Zahlungsbedingungen,
             Diverse_Adressen,
@@ -163,19 +163,33 @@ namespace JgDatevExportLib
 
         public enum EnumFelderZuordnung
         {
-            Konto,
-            SollHaben,
-            Kost_1,
-            Kost_2,
-            Wert,
+            Kundennummer,
+            FremdKundennummer,
+            Firmenname,
+            Lieferrantennummer,
+            Debitorennummer,
+            Kreditorennummer,
+            Gegenkonto,
             Belegnummer,
+            Belegdatum,
+            Fälligkeit,
+            Buchungsdatum,
+            Buchungstext,
+            Rechnungsnummer,
+            Rechnungsdatum,
+            Kontonummer,
+            Kontobezeichnung,
+            SollHaben,
+            Menge,
+            NettoBetrag,
+            BruttoBetrag,
             Skonto,
-            FirmaNummer,
-            FirmaName,
-            BuchungsDatum,
-            BelegDatum,
-            Umsatz,
-            GegenKonto
+            MWST_Prozent,
+            MWST_BU_Schluessel,
+            Kost_1,
+            Kost_1_Bezeichnung,
+            Kost_2,
+            Kost_2_Bezeichnung
         }
     }
 }
