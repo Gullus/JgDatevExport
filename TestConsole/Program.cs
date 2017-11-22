@@ -40,7 +40,7 @@ namespace TestConsole
 
                 for (int i = 0; i < 5; i++)
                 {
-                    erst.SetzeWert(DatevEnum.EnumFelderZuordnung.NettoBetrag, (785.587m).ToString());
+                    erst.SetzeWert(DatevEnum.EnumFelderZuordnung.NettoBetrag, (785587).ToString());
                     erst.DatevKoerper.SollHaben = EnumSollHaben.Soll;
                     erst.SetzeWert(DatevEnum.EnumFelderZuordnung.Kontonummer, "12343432");
 

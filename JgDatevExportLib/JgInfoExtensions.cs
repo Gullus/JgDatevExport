@@ -19,13 +19,12 @@ namespace JgDatevExportLib
             var MemberExp = member ?? (unary != null ? unary.Operand as MemberExpression : null);
 
             var info = obj.GetType().GetField(MemberExp.Member.Name, BindingFlags.NonPublic | BindingFlags.Instance);
-            var wert = info.GetValue(obj);
+            var wertAlt = info.GetValue(obj);
             var type = info.FieldType;
             var attr = GetAttrib(MemberExp);
 
-            if ((wert == null) || (wert.ToString() != WertNeu.ToString()))
+            if ((wertAlt == null) || (wertAlt.ToString() != WertNeu.ToString()))
             {
-
                 if (type == typeof(String))
                 {
                     var erg = WertNeu.ToString();
@@ -34,44 +33,37 @@ namespace JgDatevExportLib
                     else if (erg.Length > attr.Max)
                         throw new ArgumentOutOfRangeException($"Anzahl der Zeichen muss kleiner {attr.Max} sein.");
 
+                    info.SetValue(obj, erg);
                 }
                 else if (type == typeof(int))
                 {
-                    int erg = -1;
-                    try
-                    {
-                        erg = Convert.ToInt32(WertNeu);
-                    }
-                    catch
-                    {
-                        throw new ArgumentOutOfRangeException($"Wert muss eine Zahl sein.");
-                    }
-
+                    var erg = (int)WertNeu;
+  
                     if (erg < attr.Min)
                         throw new ArgumentOutOfRangeException($"Die Zahl muss größer {attr.Min} sein.");
                     else if (erg > attr.Max)
                         throw new ArgumentOutOfRangeException($"Die Zahl muss kleiner {attr.Max} sein.");
 
+                    info.SetValue(obj, erg);
                 }
                 else if (type == typeof(decimal))
                 {
-                    decimal erg = -1;
-                    try
-                    {
-                        erg = Convert.ToDecimal(WertNeu);
-                    }
-                    catch
-                    {
-                        throw new ArgumentOutOfRangeException($"Wert muss eine Zahl sein.");
-                    }
+                    var erg = (decimal)WertNeu;
 
                     if (erg < attr.Min)
                         throw new ArgumentOutOfRangeException($"Die Zahl muss größer {attr.Min} sein.");
                     else if (erg > attr.Max)
                         throw new ArgumentOutOfRangeException($"Die Zahl muss kleiner {attr.Max} sein.");
-                }
 
-                info.SetValue(obj, WertNeu);
+                    info.SetValue(obj, erg);
+                }
+                else if (type == typeof(DateTime))
+                {
+                    var erg = (DateTime)WertNeu;
+                    info.SetValue(obj, erg);
+                }
+                else
+                    info.SetValue(obj, WertNeu);
 
                 return true;
             }

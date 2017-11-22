@@ -30,7 +30,7 @@ namespace JgDatevExportLib
             _Zuordnung.StringInFelder(DatevKoerper.FelderZuordnungDatevExport);
         }
 
-        public void SetzeWert(EnumFelderZuordnung FeldZuordnung, string Wert)
+        public void SetzeWert(EnumFelderZuordnung FeldZuordnung, object Wert)
         {
             var feld = _Zuordnung[FeldZuordnung.ToString()];
             if (feld != "-")
@@ -38,12 +38,28 @@ namespace JgDatevExportLib
                 var info = typeof(DatevKoerper).GetProperty(feld);
                 if (info != null)
                 {
-                    if (info.PropertyType == typeof(Decimal))
-                        info.SetValue(DatevKoerper, Convert.ToDecimal(Wert), null);
+                    if (info.PropertyType == typeof(Int32))
+                    {
+                        if ((Wert != null) && (Wert == typeof(Int32)))
+                            info.SetValue(DatevKoerper, Wert, null);
+                        else
+                            info.SetValue(DatevKoerper, Convert.ToInt32(Wert), null);
+                    } else if (info.PropertyType == typeof(Decimal))
+                    {
+                        if ((Wert != null) && (Wert == typeof(Decimal)))
+                            info.SetValue(DatevKoerper, Wert, null);
+                        else
+                            info.SetValue(DatevKoerper, Convert.ToDecimal(Wert), null);
+                    }
                     else if (info.PropertyType == typeof(DateTime))
-                        info.SetValue(DatevKoerper, Convert.ToDateTime(Wert), null);
+                    {
+                        if ((Wert != null) && (Wert == typeof(DateTime)))
+                            info.SetValue(DatevKoerper, Wert, null);
+                        else
+                            info.SetValue(DatevKoerper, Convert.ToDateTime(Wert), null);
+                    }
                     else
-                        info.SetValue(DatevKoerper, Wert, null);
+                        info.SetValue(DatevKoerper, Wert.ToString(), null);
                 }
             }
         }
