@@ -15,6 +15,9 @@ namespace JgDatevExportLib
         private DatevKoerper _DatevKoerper = new DatevKoerper();
         public DatevKoerper DatevKoerper { get => _DatevKoerper; set => _DatevKoerper = value; }
 
+        private DatevOptionen _DatevOptionen = new DatevOptionen();
+        public DatevOptionen DatevOptionen { get => _DatevOptionen; set => _DatevOptionen = value; }
+
         private DatevFeldZuordnung _Zuordnung = new DatevFeldZuordnung(DatevFeldZuordnung.ZuordnungArt.FelderEintragen);
 
         private List<string> _AusgabeKoerper = new List<string>();
@@ -26,40 +29,55 @@ namespace JgDatevExportLib
             _Pfad = Pfad;
             _DatName = DatName;
 
-            DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei(), ref _DatevHeader, ref _DatevKoerper);
+            DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei(), ref _DatevHeader, ref _DatevKoerper, ref _DatevOptionen);
             _Zuordnung.StringInFelder(DatevKoerper.FelderZuordnungDatevExport);
         }
 
         public void SetzeWert(EnumFelderZuordnung FeldZuordnung, object Wert)
         {
             var feld = _Zuordnung[FeldZuordnung.ToString()];
+            
             if (feld != "-")
             {
-                var info = typeof(DatevKoerper).GetProperty(feld);
-                if (info != null)
+                try
                 {
-                    if (info.PropertyType == typeof(Int32))
+                    //var msg = string.Format("Eintragen der Daten das Objekt. Eintrag in Feld: {0} ; von Feld: {1}; Wert: {2}", feld, FeldZuordnung, Wert);
+                    //MessageBox.Show(msg);
+
+                    var info = typeof(DatevKoerper).GetProperty(feld);
+                    var type = info.PropertyType;
+                    if (Nullable.GetUnderlyingType(type) != null)
+                        type = Nullable.GetUnderlyingType(type);
+
+                    if (info != null)
                     {
-                        if ((Wert != null) && (Wert == typeof(Int32)))
-                            info.SetValue(DatevKoerper, Wert, null);
+                        if (Wert == null)
+                            info.SetValue(DatevKoerper, null, null);
                         else
-                            info.SetValue(DatevKoerper, Convert.ToInt32(Wert), null);
-                    } else if (info.PropertyType == typeof(Decimal))
-                    {
-                        if ((Wert != null) && (Wert == typeof(Decimal)))
-                            info.SetValue(DatevKoerper, Wert, null);
-                        else
-                            info.SetValue(DatevKoerper, Convert.ToDecimal(Wert), null);
+                        {
+                            if (type == typeof(Int32))
+                                info.SetValue(DatevKoerper, Convert.ToInt32(Wert), null);
+                            else if (type == typeof(Decimal))
+                                info.SetValue(DatevKoerper, Convert.ToDecimal(Wert), null);
+                            else if (info.PropertyType == typeof(DateTime))
+                                info.SetValue(DatevKoerper, Convert.ToDateTime(Wert), null);
+                            else
+                            {
+                                var wert = Wert.ToString();
+                                if ((FeldZuordnung == EnumFelderZuordnung.Kontonummer) && !string.IsNullOrEmpty(_DatevOptionen.FormatKontonummer))
+                                    wert = string.Format(_DatevOptionen.FormatKontonummer, wert);
+                                else if ((FeldZuordnung == EnumFelderZuordnung.Gegenkonto) && !string.IsNullOrEmpty(_DatevOptionen.FormatGegenkonto))
+                                    wert = string.Format(_DatevOptionen.FormatGegenkonto, wert);
+
+                                info.SetValue(DatevKoerper, wert, null);
+                            }
+                        }
                     }
-                    else if (info.PropertyType == typeof(DateTime))
-                    {
-                        if ((Wert != null) && (Wert == typeof(DateTime)))
-                            info.SetValue(DatevKoerper, Wert, null);
-                        else
-                            info.SetValue(DatevKoerper, Convert.ToDateTime(Wert), null);
-                    }
-                    else
-                        info.SetValue(DatevKoerper, Wert.ToString(), null);
+                }
+                catch (Exception f)
+                {
+                    var msg = string.Format("Fehler bei eintragen der Daten das Objekt. Eintrag in Feld: {0} ; von Feld: {1}; Wert: {2}", feld, FeldZuordnung, Wert);
+                    throw new Exception(msg + "\nGrund: " + f.Message, f);
                 }
             }
         }

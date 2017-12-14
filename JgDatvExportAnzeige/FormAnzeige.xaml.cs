@@ -12,6 +12,7 @@ namespace JgDatevExportAnzeige
 
         private DatevHeader _DatevHeader = new DatevHeader();
         private DatevKoerper _DatevKoerper = new DatevKoerper();
+        private DatevOptionen _DatevOptionen = new DatevOptionen();
         private DatevFeldZuordnung _Zuordnung = new DatevFeldZuordnung(DatevFeldZuordnung.ZuordnungArt.DatevModus);
 
         private enum EnumAuswahlAnzeige
@@ -32,7 +33,7 @@ namespace JgDatevExportAnzeige
             // Wenn öffnen Fehlschlägt, werden die Objekte mit Vorgeben genommen.
             try
             {
-                DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei(), ref _DatevHeader, ref _DatevKoerper);
+                DatevHelper.DatenLaden(DatevHelper.GetNameConfigDatei(), ref _DatevHeader, ref _DatevKoerper, ref _DatevOptionen);
                 _Zuordnung.StringInFelder(_DatevKoerper.FelderZuordnungDatevExport);
             }
             catch { }
@@ -78,12 +79,18 @@ namespace JgDatevExportAnzeige
             CommandBindings.Add(new CommandBinding(MyCommands.Speichern, (sen, erg) =>
             {
                 _DatevKoerper.FelderZuordnungDatevExport = _Zuordnung.ToString();
-                DatevHelper.DatenSpeichern(DatevHelper.GetNameConfigDatei(), _DatevHeader, _DatevKoerper);
+                DatevHelper.DatenSpeichern(DatevHelper.GetNameConfigDatei(), _DatevHeader, _DatevKoerper, _DatevOptionen);
             }));
 
             CommandBindings.Add(new CommandBinding(MyCommands.Beenden, (sen, erg) =>
             {
                 this.Close();
+            }));
+
+            CommandBindings.Add(new CommandBinding(MyCommands.DatevOptionen, (sen, erg) =>
+            {
+                var fo = new FormEditOptionen(_DatevOptionen);
+                fo.ShowDialog();
             }));
         }
 

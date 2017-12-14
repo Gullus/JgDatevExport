@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DatevFeldZuordnung.cs" />
     <Compile Include="DatevExportErstellen.cs" />
+    <Compile Include="DatevOptionen.cs" />
     <Compile Include="JgInfoAttribute.cs" />
     <Compile Include="DatevEnum.cs" />
     <Compile Include="DatevHeader.cs" />

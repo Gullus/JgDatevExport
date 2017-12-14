@@ -52,13 +52,14 @@ namespace JgDatevExportLib
             return Wert.Replace("_", " ").Replace("__", "//").Replace("___", "-");
         }
 
-        public static void DatenSpeichern(string DateiName, DatevHeader Header, DatevKoerper Koerper)
+        public static void DatenSpeichern(string DateiName, DatevHeader Header, DatevKoerper Koerper, DatevOptionen Optionen)
         {
             var fs = new FileStream(DateiName, FileMode.Create);
 
             var arrList = new ArrayList();
             arrList.Add(Header);
             arrList.Add(Koerper);
+            arrList.Add(Optionen);
 
             var formatter = new BinaryFormatter();
 
@@ -77,7 +78,7 @@ namespace JgDatevExportLib
             }
         }
 
-        public static void DatenLaden(string DateiName, ref DatevHeader Header, ref DatevKoerper Koerper)
+        public static void DatenLaden(string DateiName, ref DatevHeader Header, ref DatevKoerper Koerper, ref DatevOptionen Optionen)
         {
             FileStream fs = null;
 
@@ -94,6 +95,8 @@ namespace JgDatevExportLib
                         Header = (DatevHeader)obj;
                     else if (obj is DatevKoerper)
                         Koerper = (DatevKoerper)obj;
+                    else if (obj is DatevOptionen)
+                        Optionen = (DatevOptionen)obj;
                 }
             }
             catch (SerializationException e)

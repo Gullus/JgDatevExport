@@ -55,6 +55,7 @@
                 <RibbonGroup Header="Aktualisieren">
                     <RibbonButton Label="Laden" Command="{x:Static local:MyCommands.Laden}" LargeImageSource="Bilder\JgNew.ico"/>
                     <RibbonButton Label="Speichern" Command="{x:Static local:MyCommands.Speichern}" LargeImageSource="Bilder\JgSave.ico"/>
+                    <RibbonButton Label="Optionen" Command="{x:Static local:MyCommands.DatevOptionen}" LargeImageSource="Bilder\JgSettings.ico"/>
                 </RibbonGroup>
                 <RibbonGroup Header="Beenden">
                     <RibbonButton Label="Beenden" Command="{x:Static local:MyCommands.Beenden}" LargeImageSource="Bilder\JgClose.ico"/>

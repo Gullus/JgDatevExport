@@ -68,6 +68,10 @@
       <DependentUpon>FormAnzeige.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="FormEditOptionen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FormEditZusatzInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,6 +94,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormEditOptionen.xaml.cs">
+      <DependentUpon>FormEditOptionen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FormEditZusatzInfo.xaml.cs">
       <DependentUpon>FormEditZusatzInfo.xaml</DependentUpon>
     </Compile>
@@ -125,9 +132,8 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\JgDatevExportLib.DatevHeader.datasource" />
+    <None Include="Properties\DataSources\JgDatevExportLib.DatevOptionen.datasource" />
     <None Include="Properties\DataSources\JgDatevExportLib.DsListeAnzeige.datasource" />
-    <None Include="Properties\DataSources\JgDatevExportLib.TBelegInfo.datasource" />
-    <None Include="Properties\DataSources\JgDatevExportLib.TZusatzInformation.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -154,6 +160,9 @@
   <ItemGroup>
     <Resource Include="Bilder\JgCancel.ico" />
     <Resource Include="Bilder\JgCheck.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\JgSettings.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

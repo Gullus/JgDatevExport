@@ -12,7 +12,7 @@ namespace JgDatevExportLib
             return (JgInfoAttribute)attrTemp[0];
         }
 
-        public static bool GetJgInfoAttribute<T>(this T obj, Expression<Func<T, object>> value, object WertNeu)
+        public static bool SetzeWertInObject<T>(this T obj, Expression<Func<T, object>> value, object WertNeu)
         {
             var member = value.Body as MemberExpression;
             var unary = value.Body as UnaryExpression;
@@ -23,49 +23,69 @@ namespace JgDatevExportLib
             var type = info.FieldType;
             var attr = GetAttrib(MemberExp);
 
-            if ((wertAlt == null) || (wertAlt.ToString() != WertNeu.ToString()))
+            try
             {
-                if (type == typeof(String))
+                if (WertNeu == null)
                 {
-                    var erg = WertNeu.ToString();
-                    if (erg.Length < attr.Min)
-                        throw new ArgumentOutOfRangeException($"Anzahl der Zeichen muss größer {attr.Min} sein.");
-                    else if (erg.Length > attr.Max)
-                        throw new ArgumentOutOfRangeException($"Anzahl der Zeichen muss kleiner {attr.Max} sein.");
+                    if (Nullable.GetUnderlyingType(type) != null)
+                        info.SetValue(obj, null);
+                    else if (type == typeof(int))
+                        info.SetValue(obj, 0);
+                    else if (type == typeof(decimal))
+                        info.SetValue(obj, 0);
+                    else if (type == typeof(DateTime))
+                        info.SetValue(obj, DateTime.Now);
 
-                    info.SetValue(obj, erg);
-                }
-                else if (type == typeof(int))
-                {
-                    var erg = (int)WertNeu;
-  
-                    if (erg < attr.Min)
-                        throw new ArgumentOutOfRangeException($"Die Zahl muss größer {attr.Min} sein.");
-                    else if (erg > attr.Max)
-                        throw new ArgumentOutOfRangeException($"Die Zahl muss kleiner {attr.Max} sein.");
-
-                    info.SetValue(obj, erg);
-                }
-                else if (type == typeof(decimal))
-                {
-                    var erg = (decimal)WertNeu;
-
-                    if (erg < attr.Min)
-                        throw new ArgumentOutOfRangeException($"Die Zahl muss größer {attr.Min} sein.");
-                    else if (erg > attr.Max)
-                        throw new ArgumentOutOfRangeException($"Die Zahl muss kleiner {attr.Max} sein.");
-
-                    info.SetValue(obj, erg);
-                }
-                else if (type == typeof(DateTime))
-                {
-                    var erg = (DateTime)WertNeu;
-                    info.SetValue(obj, erg);
+                    info.SetValue(obj, "");
                 }
                 else
-                    info.SetValue(obj, WertNeu);
+                {
+                    if (type == typeof(String))
+                    {
+                        var erg = WertNeu.ToString();
+                        if (erg.Length < attr.Min)
+                            throw new ArgumentOutOfRangeException($"Feld: {MemberExp.Member.Name} -> Anzahl der Zeichen muss größer {attr.Min} sein.");
+                        else if (erg.Length > attr.Max)
+                            throw new ArgumentOutOfRangeException($"Feld: {MemberExp.Member.Name} -> Anzahl der Zeichen muss kleiner {attr.Max} sein.");
 
-                return true;
+                        info.SetValue(obj, erg);
+                    }
+                    else if (type == typeof(int))
+                    {
+                        var erg = (int)WertNeu;
+
+                        if (erg < attr.Min)
+                            throw new ArgumentOutOfRangeException($"Feld: {MemberExp.Member.Name} -> Die Zahl muss größer {attr.Min} sein.");
+                        else if (erg > attr.Max)
+                            throw new ArgumentOutOfRangeException($"Feld: {MemberExp.Member.Name} -> Die Zahl muss kleiner {attr.Max} sein.");
+
+                        info.SetValue(obj, erg);
+                    }
+                    else if (type == typeof(decimal))
+                    {
+                        var erg = (decimal)WertNeu;
+
+                        if (erg < attr.Min)
+                            throw new ArgumentOutOfRangeException($"Feld: {MemberExp.Member.Name} -> Die Zahl muss größer {attr.Min} sein.");
+                        else if (erg > attr.Max)
+                            throw new ArgumentOutOfRangeException($"Feld: {MemberExp.Member.Name} -> Die Zahl muss kleiner {attr.Max} sein.");
+
+                        info.SetValue(obj, erg);
+                    }
+                    else if (type == typeof(DateTime))
+                    {
+                        var erg = (DateTime)WertNeu;
+                        info.SetValue(obj, erg);
+                    }
+                    else
+                        info.SetValue(obj, WertNeu);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Feld: {MemberExp.Member.Name} -> Fehler bei eintragen des Wertes.", ex);
             }
 
             return false;

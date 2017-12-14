@@ -36,7 +36,7 @@ namespace JgDatevExportLib
             get => _Versionsnummer;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._Versionsnummer, value))
+                if (this.SetzeWertInObject(v => v._Versionsnummer, value))
                     NotifyPropertyChanged("Versionsnummer");
             }
         }
@@ -70,7 +70,7 @@ namespace JgDatevExportLib
             get => _Importiert;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._Importiert, value))
+                if (this.SetzeWertInObject(v => v._Importiert, value))
                     NotifyPropertyChanged("Importiert");
             }
         }   // Wird beim Import in Datev belegt
@@ -86,7 +86,7 @@ namespace JgDatevExportLib
             get => _Herkunft;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._Herkunft, value))
+                if (this.SetzeWertInObject(v => v._Herkunft, value))
                     NotifyPropertyChanged("Herkunft");
             }
         }
@@ -101,7 +101,7 @@ namespace JgDatevExportLib
             get => _ExportiertVon;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._ExportiertVon, value))
+                if (this.SetzeWertInObject(v => v._ExportiertVon, value))
                     NotifyPropertyChanged("ExportiertVon");
             }
         }
@@ -117,7 +117,7 @@ namespace JgDatevExportLib
             get => _ImportiertVon;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._ImportiertVon, value))
+                if (this.SetzeWertInObject(v => v._ImportiertVon, value))
                     NotifyPropertyChanged("ImportiertVon");
             }
         }
@@ -129,7 +129,7 @@ namespace JgDatevExportLib
             get => _BeraterNummer;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._BeraterNummer, value))
+                if (this.SetzeWertInObject(v => v._BeraterNummer, value))
                     NotifyPropertyChanged("BeraterNummer");
             }
         }
@@ -141,7 +141,7 @@ namespace JgDatevExportLib
             get => _MandantenNummer;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._MandantenNummer, value))
+                if (this.SetzeWertInObject(v => v._MandantenNummer, value))
                     NotifyPropertyChanged("MandantenNummer");
             }
         }
@@ -185,7 +185,7 @@ namespace JgDatevExportLib
             get => _Bezeichnung;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._Bezeichnung, value))
+                if (this.SetzeWertInObject(v => v._Bezeichnung, value))
                     NotifyPropertyChanged("Bezeichnung");
             }
         }
@@ -201,7 +201,7 @@ namespace JgDatevExportLib
             get => _DiktatKürzel;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._DiktatKürzel, value))
+                if (this.SetzeWertInObject(v => v._DiktatKürzel, value))
                     NotifyPropertyChanged("DiktatKürzel");
             }
         }
@@ -254,7 +254,7 @@ namespace JgDatevExportLib
             get => _AnwendungsInformation;
             set
             {
-                if (this.GetJgInfoAttribute(v => v._AnwendungsInformation, value))
+                if (this.SetzeWertInObject(v => v._AnwendungsInformation, value))
                     NotifyPropertyChanged("AnwendungsInformation");
             }
         }

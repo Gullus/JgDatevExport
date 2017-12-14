@@ -46,12 +46,20 @@ namespace JgDatevExportAnzeige
             get { return _Beenden; }
         }
 
+        private static RoutedUICommand _DatevOptionen;
+        public static RoutedUICommand DatevOptionen
+        {
+            get { return _DatevOptionen; }
+        }
+
         static MyCommands()
         {
             _HeaderAnzeigen = new RoutedUICommand("Header anzeigen", "HeaderAnzeigen", typeof(MyCommands));
             _KoerperAnzeigen = new RoutedUICommand("Koerper anzeigen", "KoerperAnzeigen", typeof(MyCommands));
             _BelegInfoAnzeigen = new RoutedUICommand("BelegInfo anzeigen", "BelegInfoAnzeigen", typeof(MyCommands));
             _ZusatzInformationAnzeigen = new RoutedUICommand("ZusatzInformation anzeigen", "ZusatzInformationAnzeigen", typeof(MyCommands));
+
+            _DatevOptionen = new RoutedUICommand();
 
             _Laden = new RoutedUICommand("Daten laden", "DatenLaden", typeof(MyCommands));
             _Speichern = new RoutedUICommand("Daten speichern", "DatenSpeichern", typeof(MyCommands));
