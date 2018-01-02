@@ -35,8 +35,8 @@ namespace JgDatevExportLib
                         info.SetValue(obj, 0);
                     else if (type == typeof(DateTime))
                         info.SetValue(obj, DateTime.Now);
-
-                    info.SetValue(obj, "");
+                    else
+                        info.SetValue(obj, "");
                 }
                 else
                 {
@@ -79,19 +79,17 @@ namespace JgDatevExportLib
                     }
                     else
                         info.SetValue(obj, WertNeu);
-
-                    return true;
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 throw new Exception($"Feld: {MemberExp.Member.Name} -> Fehler bei eintragen des Wertes.", ex);
             }
-
-            return false;
         }
 
-        public static string JgDruck<T>(this T obj, Expression<Func<T, object>> value)
+        public static string JgDruck<T>(this T obj, Expression<Func<T, object>> value, String Format = null)
             where T : class
         {
             var member = value.Body as MemberExpression;
@@ -106,24 +104,26 @@ namespace JgDatevExportLib
             if (type == typeof(string))
             {
                 if (wert == null)
-                    wert = "";
-                return "\"" + wert.ToString() + "\"";
+                  return attr.IstErforderlich ? "\"\"" : "";
+
+                var ms = string.IsNullOrEmpty(Format) ? wert.ToString() : string.Format(Format, wert);
+                if (ms.Length > attr.Max)
+                    ms = ms.Substring(0, attr.Max);
+
+                return "\"" + ms + "\"";
             }
             else if ((type == typeof(int)) || (type == typeof(int?)))
             {
-                if (wert != null)
-                    return wert.ToString();
-
-                if (attr.IstErforderlich)
-                    return "0";
+                if (wert == null)
+                    return attr.IstErforderlich ? "0" : "";
+                return string.IsNullOrEmpty(Format) ? wert.ToString() : string.Format(Format, wert);
             }
             else if ((type == typeof(decimal)) || (type == typeof(decimal?)))
             {
-                if (wert != null)
-                    return ((decimal)wert).ToString(attr.Format);
+                if (wert == null)
+                    return attr.IstErforderlich ? 0.ToString(attr.Format) : "";
 
-                if (attr.IstErforderlich)
-                    return "0,00";
+                return ((decimal)wert).ToString(attr.Format);
             }
             else if ((type == typeof(DateTime)) || (type == typeof(DateTime?)))
             {
@@ -149,8 +149,6 @@ namespace JgDatevExportLib
                             return ss[ss.Length - 1].ToString();
                     }
                 }
-                else
-                    return attr.AnzeigeEnum == JgInfoAttribute.AnzeigeEnums.AlsZahl ? "" : "\"\"";
             }
 
             return "";

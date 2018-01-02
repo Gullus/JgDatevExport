@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Jg DatevExport - Feldzuordnung" Height="222.735" Width="488.843" ShowInTaskbar="False" 
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Icon="JgExport.ico">
 
     <Window.Resources>
         <Style TargetType="Label">

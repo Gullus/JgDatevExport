@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Text;
 using static JgDatevExportLib.DatevEnum;
 
 namespace JgDatevExportLib
 {
     [Serializable]
-    public class DatevHeader : INotifyPropertyChanged, IListeAnzeige
+    public class DatevHeader : INotifyPropertyChanged
     {
+        [NonSerialized]
+        public DatevOptionen DvOptionen;
+
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -261,37 +264,43 @@ namespace JgDatevExportLib
 
         public override string ToString()
         {
-            return this.JgDruck(v => v._DatevFormatKz) + ";"
-                + this.JgDruck(v => v._Versionsnummer) + ";"
-                + this.JgDruck(v => v._DatenKategorie) + ";"
-                + DatevHelper.UnterstricheInWert(this.JgDruck(v => v._FormatName)) + ";"
-                + this.JgDruck(v => v._FormatVersion) + ";"
-                + this.JgDruck(v => v._ErzeugtAm) + ";"
-                + this.JgDruck(v => v._Importiert) + ";"
-                + this.JgDruck(v => v._Herkunft) + ";"
-                + this.JgDruck(v => v._ExportiertVon) + ";"
-                + this.JgDruck(v => v._ImportiertVon) + ";"
-                + this.JgDruck(v => v._BeraterNummer) + ";"
-                + this.JgDruck(v => v._MandantenNummer) + ";"
-                + this.JgDruck(v => v._WjBeginn) + ";"
-                + this.JgDruck(v => v._SachkontenNummernLaenge) + ";"
-                + this.JgDruck(v => v._DatumVon) + ";"
-                + this.JgDruck(v => v._DatumBis) + ";"
-                + this.JgDruck(v => v._Bezeichnung) + ";"
-                + this.JgDruck(v => v._DiktatKürzel) + ";"
-                + this.JgDruck(v => v._BuchungsTyp) + ";"
-                + this.JgDruck(v => v._Rechnungszweck) + ";"
-                + this.JgDruck(v => v._Festschreibung) + ";"
-                + this.JgDruck(v => v._WkZ) + ";"
-                + ";"
-                + this.JgDruck(v => v._Derivatskennzeichen) + ";"
-                + ";"
-                + ";"
-                + this.JgDruck(v => v._SKR) + ";"
-                + this.JgDruck(v => v._BranchenloesungId) + ";"
-                + ";"
-                + ";"
-                + this.JgDruck(v => v._AnwendungsInformation);
+            var sb = new StringBuilder();
+
+            sb.Append(this.JgDruck(v => v._DatevFormatKz) + ";");
+            sb.Append(this.JgDruck(v => v._Versionsnummer) + ";");
+            sb.Append(this.JgDruck(v => v._DatenKategorie) + ";");
+            sb.Append(DatevHelper.UnterstricheInWert(this.JgDruck(v => v._FormatName)) + ";");
+            sb.Append(this.JgDruck(v => v._FormatVersion) + ";");
+            sb.Append(this.JgDruck(v => v._ErzeugtAm) + ";");
+            sb.Append(this.JgDruck(v => v._Importiert) + ";");
+            sb.Append(this.JgDruck(v => v._Herkunft) + ";");
+            sb.Append(this.JgDruck(v => v._ExportiertVon) + ";");
+            sb.Append(this.JgDruck(v => v._ImportiertVon) + ";");
+            sb.Append(this.JgDruck(v => v._BeraterNummer) + ";");
+
+            sb.Append(this.JgDruck(v => v._MandantenNummer, DvOptionen.FormatMandantennummer) + ";");
+
+            sb.Append(this.JgDruck(v => v._WjBeginn) + ";");
+            sb.Append(this.JgDruck(v => v._SachkontenNummernLaenge) + ";");
+            sb.Append(this.JgDruck(v => v._DatumVon) + ";");
+            sb.Append(this.JgDruck(v => v._DatumBis) + ";");
+            sb.Append(this.JgDruck(v => v._Bezeichnung) + ";");
+            sb.Append(this.JgDruck(v => v._DiktatKürzel) + ";");
+            sb.Append(this.JgDruck(v => v._BuchungsTyp) + ";");
+            sb.Append(this.JgDruck(v => v._Rechnungszweck) + ";");
+            sb.Append(this.JgDruck(v => v._Festschreibung) + ";");
+            sb.Append(this.JgDruck(v => v._WkZ) + ";");
+            sb.Append(";");
+            sb.Append(this.JgDruck(v => v._Derivatskennzeichen) + ";");
+            sb.Append(";");
+            sb.Append(";");
+            sb.Append(this.JgDruck(v => v._SKR) + ";");
+            sb.Append(this.JgDruck(v => v._BranchenloesungId) + ";");
+            sb.Append(";");
+            sb.Append(";");
+            sb.Append(this.JgDruck(v => v._AnwendungsInformation));
+
+            return sb.ToString();
         }
 
         public List<DsListeAnzeige> ListeAnzeigeErstellen()

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:JgDatevExportLib="clr-namespace:JgDatevExportLib;assembly=JgDatevExportLib" x:Class="JgDatevExportAnzeige.FormEditBelegInfo"
         mc:Ignorable="d"
-        Title="Jg DatevExport - Beleginformationen" Height="300" Width="497" Loaded="Window_Loaded" ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
+        Title="Jg DatevExport - Beleginformationen" Height="300" Width="497" Loaded="Window_Loaded" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Icon="JgExport.ico">
     
     <Window.Resources>
         <CollectionViewSource x:Key="vsZusatzInfo" d:DesignSource="{d:DesignInstance {x:Type JgDatevExportLib:DsBelegInformation}, CreateList=True}"/>

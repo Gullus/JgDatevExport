@@ -98,6 +98,9 @@ namespace JgDatevExportLib
                     else if (obj is DatevOptionen)
                         Optionen = (DatevOptionen)obj;
                 }
+
+                Header.DvOptionen = Optionen;
+                Koerper.DvOptionen = Optionen;
             }
             catch (SerializationException e)
             {

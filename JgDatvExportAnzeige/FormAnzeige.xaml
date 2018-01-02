@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     x:Class="JgDatevExportAnzeige.FormAnzeige"
     
-    Title="MainWindow" x:Name="RibbonWindow" Width="793" Height="480" Loaded="RibbonWindow_Loaded">
+    Title="MainWindow" x:Name="RibbonWindow" Width="793" Height="480" Loaded="RibbonWindow_Loaded" Icon="JgExport.ico">
 
     <RibbonWindow.Resources>
         <CollectionViewSource x:Key="vsDaten" d:DesignSource="{d:DesignInstance {x:Type JgDatevExportLib:DsListeAnzeige}, CreateList=True}"/>

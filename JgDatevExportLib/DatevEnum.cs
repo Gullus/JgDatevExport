@@ -85,6 +85,9 @@ namespace JgDatevExportLib
         public enum EnumSachkontenNummernLaenge : byte
         {
             Stellen_4 = 4,
+            Stellen_5 = 5,
+            Stellen_6 = 6,
+            Stellen_7 = 7,
             Stellen_8 = 8
         }
 
@@ -189,7 +192,9 @@ namespace JgDatevExportLib
             Kost_1,
             Kost_1_Bezeichnung,
             Kost_2,
-            Kost_2_Bezeichnung
+            Kost_2_Bezeichnung,
+            Rechn_BelegNummer,     // Bei Eingangsrechnung Rechungsnummer, bei Ausgangsrechnung Belegnummer
+            Rechn_BelegDatum
         }
     }
 }

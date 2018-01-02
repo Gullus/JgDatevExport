@@ -7,6 +7,10 @@ namespace JgDatevExportAnzeige
 {
     public partial class FormEditVorgabeWert : Window
     {
+        private readonly Type _MyType;
+        private readonly object _MyObject;
+        private readonly string _FeldName;
+
         public string Ergebniss
         {
             get => tbFeldVorgabe.Text;
@@ -16,13 +20,23 @@ namespace JgDatevExportAnzeige
         {
             InitializeComponent();
 
+            _MyType = MyType;
+            _MyObject = MyObject;
+            _FeldName = FeldName;
+
             tblFeldname.Text = FeldName;
             tblMin.Text = Min.ToString();
             tblMax.Text = Max.ToString();
 
-            var myBinding = new Binding(FeldName)
+            var info = _MyType.GetProperty(_FeldName);
+            if (Nullable.GetUnderlyingType(info.PropertyType) != null)
+                btnNullEintragen.Visibility = Visibility.Visible;
+            else
+                btnNullEintragen.Visibility = Visibility.Hidden;
+
+            var myBinding = new Binding(_FeldName)
             {
-                Source = MyObject,
+                Source = _MyObject,
                 Mode = BindingMode.TwoWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 ValidatesOnExceptions = true,
@@ -44,6 +58,12 @@ namespace JgDatevExportAnzeige
         private void tbFeldVorgabe_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             lblError.Text = "";
+        }
+
+        private void Click_NullEintragen(object sender, RoutedEventArgs e)
+        {
+            var info = _MyType.GetProperty(_FeldName); //, BindingFlags.NonPublic | BindingFlags.Instance);
+            info.SetValue(_MyObject, null);
         }
     }
 }

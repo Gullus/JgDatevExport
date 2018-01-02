@@ -62,15 +62,7 @@ namespace JgDatevExportLib
                             else if (info.PropertyType == typeof(DateTime))
                                 info.SetValue(DatevKoerper, Convert.ToDateTime(Wert), null);
                             else
-                            {
-                                var wert = Wert.ToString();
-                                if ((FeldZuordnung == EnumFelderZuordnung.Kontonummer) && !string.IsNullOrEmpty(_DatevOptionen.FormatKontonummer))
-                                    wert = string.Format(_DatevOptionen.FormatKontonummer, wert);
-                                else if ((FeldZuordnung == EnumFelderZuordnung.Gegenkonto) && !string.IsNullOrEmpty(_DatevOptionen.FormatGegenkonto))
-                                    wert = string.Format(_DatevOptionen.FormatGegenkonto, wert);
-
-                                info.SetValue(DatevKoerper, wert, null);
-                            }
+                                info.SetValue(DatevKoerper, Wert, null);
                         }
                     }
                 }
@@ -89,7 +81,7 @@ namespace JgDatevExportLib
 
         public static string DateinameAusgabe(string Pfad, string DateiName)
         {
-            return Pfad + @"\EXTF_" + DateiName + "_" + DateTime.Now.ToString("ddMMyy_mmHH") + ".csv";
+            return Pfad + @"\EXTF_" + DateiName + "_" + DateTime.Now.ToString("ddMMyy_HHmmss") + ".csv";
         }
 
         public void SchreibeInDatei()

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Jg DatevExport - Feldzuordnung" Height="280.511" Width="525.846" ShowInTaskbar="False" 
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Icon="JgExport.ico">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -46,7 +46,8 @@
         <TextBlock x:Name="tblMax" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Background="LightGray" />
 
         <Label Content="Vorgabewert" Grid.Row="5" />
-        <TextBox x:Name="tbFeldVorgabe" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" PreviewKeyDown="tbFeldVorgabe_KeyUp"/>
+        <TextBox x:Name="tbFeldVorgabe" Grid.Row="5" Grid.Column="1"  Margin="3" PreviewKeyDown="tbFeldVorgabe_KeyUp"/>
+        <Button x:Name="btnNullEintragen" Content="kein Wert" Grid.Column="2" Grid.Row="5" Margin="3" Click="Click_NullEintragen"/>
 
         <TextBlock x:Name="lblError" Grid.Row="7" Grid.ColumnSpan="2" Margin="3" TextWrapping="Wrap"/>
 

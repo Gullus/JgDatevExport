@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text;
 using static JgDatevExportLib.DatevEnum;
 
@@ -119,6 +118,9 @@ namespace JgDatevExportLib
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        [NonSerialized]
+        public DatevOptionen DvOptionen = null;
+
         public DatevKoerper()
         {
             FelderArrayMitNummerUndFeldBelegen();
@@ -150,7 +152,7 @@ namespace JgDatevExportLib
 
         // Umsatz(ohne Soll/Haben-Kz)
 
-        [JgInfo(true, 99999999, Format = "N2")]
+        [JgInfo(true, 99999999, Format = "F2")]
         private decimal _Umsatz = 0m;
         public decimal Umsatz
         {
@@ -176,7 +178,7 @@ namespace JgDatevExportLib
 
         // Kurs
 
-        [JgInfo(false, 11, Format = "N6")]
+        [JgInfo(false, 11, Format = "F6")]
         private decimal? _Kurs = null;
         public decimal? Kurs
         {
@@ -190,7 +192,7 @@ namespace JgDatevExportLib
 
         // Basis-Umsatz
 
-        [JgInfo(false, 13, Format = "N2")]
+        [JgInfo(false, 13, Format = "F2")]
         private decimal? _BasisUmsatz = 0;
         public decimal? BasisUmsatz
         {
@@ -286,7 +288,7 @@ namespace JgDatevExportLib
 
         // Skonto
 
-        [JgInfo(false, 11, Format = "N2")]
+        [JgInfo(false, 11, Format = "F2")]
         private decimal? _Skonto = null;
         public decimal? Skonto
         {
@@ -415,7 +417,7 @@ namespace JgDatevExportLib
 
         // Kost-Menge
 
-        [JgInfo(false, 12, Format = "N2")]
+        [JgInfo(false, 12, Format = "F2")]
         private decimal? _KostMenge = null;
         public decimal? KostMenge
         {
@@ -443,7 +445,7 @@ namespace JgDatevExportLib
 
         // EU-Steuersatz
 
-        [JgInfo(false, 99, Format = "N2")]
+        [JgInfo(false, 99, Format = "F2")]
         private decimal? _EuSteuersatz = null;
         public decimal? EuSteuersatz
         {
@@ -552,7 +554,7 @@ namespace JgDatevExportLib
 
         // Gewicht
 
-        [JgInfo(false, 99999999, Format = "N2")]
+        [JgInfo(false, 99999999, Format = "F2")]
         private decimal? _Gewicht = null;
         public decimal? Gewicht
         {
@@ -674,7 +676,7 @@ namespace JgDatevExportLib
 
         // 100 - EU-Steuersatz(Anzahlungen)
 
-        [JgInfo(false, 99, Format = "N2")]
+        [JgInfo(false, 99, Format = "F2")]
         private decimal? _EuSteuersatzAnzahlungen = null;
         public decimal? EuSteuersatzAnzahlungen
         {
@@ -865,8 +867,8 @@ namespace JgDatevExportLib
             sb.Append(this.JgDruck(v => v._Kurs) + ";");
             sb.Append(this.JgDruck(v => v._BasisUmsatz) + ";");
             sb.Append(this.JgDruck(v => v._WkzBasisUmsatz) + ";");
-            sb.Append(this.JgDruck(v => v._Konto) + ";");
-            sb.Append(this.JgDruck(v => v._GegenKonto) + ";");
+            sb.Append(this.JgDruck(v => v._Konto, DvOptionen.FormatKontonummer) + ";");
+            sb.Append(this.JgDruck(v => v._GegenKonto, DvOptionen.FormatGegenkonto) + ";");
             sb.Append(this.JgDruck(v => v._BuSchluessel) + ";");
             sb.Append(this.JgDruck(v => v._Belegdatum) + ";");
             sb.Append(this.JgDruck(v => v._Belegfeld1) + ";");

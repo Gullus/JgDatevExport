@@ -5,11 +5,6 @@ using System.Runtime.CompilerServices;
 
 namespace JgDatevExportLib
 {
-    interface IListeAnzeige
-    {
-        List<DsListeAnzeige> ListeAnzeigeErstellen();
-    }
-
     public class DsListeAnzeige : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

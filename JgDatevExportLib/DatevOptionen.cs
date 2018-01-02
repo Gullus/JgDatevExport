@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace JgDatevExportLib
 {
@@ -13,5 +10,9 @@ namespace JgDatevExportLib
 
         private string _FormatGegenkonto = "{0}";
         public string FormatGegenkonto { get => _FormatGegenkonto; set => _FormatGegenkonto = value; }
+
+        private string _FormatMandantennummer = "{0}";
+        public string FormatMandantennummer { get => _FormatMandantennummer; set => _FormatMandantennummer = value; }
     }
 }
+
