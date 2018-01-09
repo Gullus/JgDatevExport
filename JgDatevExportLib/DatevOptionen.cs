@@ -13,6 +13,10 @@ namespace JgDatevExportLib
 
         private string _FormatMandantennummer = "{0}";
         public string FormatMandantennummer { get => _FormatMandantennummer; set => _FormatMandantennummer = value; }
+
+        private int _CodierungZeichen = -100;
+        public int CodierungZeichen { get => _CodierungZeichen; set => _CodierungZeichen = value; }
+
     }
 }
 

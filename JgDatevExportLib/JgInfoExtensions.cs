@@ -45,9 +45,11 @@ namespace JgDatevExportLib
                         var erg = WertNeu.ToString();
                         if (erg.Length < attr.Min)
                             throw new ArgumentOutOfRangeException($"Feld: {MemberExp.Member.Name} -> Anzahl der Zeichen muss größer {attr.Min} sein.");
-                        else if (erg.Length > attr.Max)
-                            throw new ArgumentOutOfRangeException($"Feld: {MemberExp.Member.Name} -> Anzahl der Zeichen muss kleiner {attr.Max} sein.");
 
+                        if (erg.Length >= attr.Max)
+                            erg = erg.Substring(0, attr.Max - 1);
+
+                        // throw new ArgumentOutOfRangeException($"Feld: {MemberExp.Member.Name} -> Anzahl der Zeichen muss kleiner {attr.Max} sein.");
                         info.SetValue(obj, erg);
                     }
                     else if (type == typeof(int))
@@ -104,12 +106,9 @@ namespace JgDatevExportLib
             if (type == typeof(string))
             {
                 if (wert == null)
-                  return attr.IstErforderlich ? "\"\"" : "";
+                    return "\"\"";
 
                 var ms = string.IsNullOrEmpty(Format) ? wert.ToString() : string.Format(Format, wert);
-                if (ms.Length > attr.Max)
-                    ms = ms.Substring(0, attr.Max);
-
                 return "\"" + ms + "\"";
             }
             else if ((type == typeof(int)) || (type == typeof(int?)))
@@ -148,6 +147,12 @@ namespace JgDatevExportLib
                         case JgInfoAttribute.AnzeigeEnums.LetztesZeichen:
                             return ss[ss.Length - 1].ToString();
                     }
+                }
+                else
+                {
+                    
+                    if ((attr.AnzeigeEnum != JgInfoAttribute.AnzeigeEnums.AlsString) || (attr.AnzeigeEnum != JgInfoAttribute.AnzeigeEnums.ErsterBuchstabe) || (attr.AnzeigeEnum != JgInfoAttribute.AnzeigeEnums.ErsteZweiBuchstaben))
+                        return "\"\"";
                 }
             }
 

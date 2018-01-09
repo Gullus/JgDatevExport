@@ -95,7 +95,38 @@ namespace JgDatevExportLib
                 sb.AppendLine(ds);
             try
             {
-                File.WriteAllText(datName, sb.ToString());
+                Encoding enc = null;
+
+                switch (_DatevOptionen.CodierungZeichen)
+                {
+                    case -100 : // kein Encoding
+                        enc = Encoding.Default;
+                        break;
+                    case -101:
+                        enc = Encoding.ASCII;
+                        break;
+                    case -102:
+                        enc = Encoding.Unicode;
+                        break;
+                    case -103:
+                        enc = Encoding.UTF7;
+                        break;
+                    case -104:
+                        enc = Encoding.UTF8;
+                        break;
+                    case -105:
+                        enc = Encoding.UTF32;
+                        break;
+                    default:
+                        enc = Encoding.GetEncoding(_DatevOptionen.CodierungZeichen);
+                        break;
+                }
+
+                if (enc == null)
+                    File.WriteAllText(datName, sb.ToString(), Encoding.Default);
+                else
+                    File.WriteAllText(datName, sb.ToString(), enc);
+
             }
             catch (Exception ex)
             {
@@ -103,7 +134,7 @@ namespace JgDatevExportLib
                 return;
             }
 
-            MessageBox.Show($"Datei '{datName}' erfolgreich erstellt.", "Fehler !", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"Datei '{datName}' erfolgreich erstellt.", "Indormatio", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
