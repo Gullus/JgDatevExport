@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     x:Class="JgDatevExportAnzeige.FormAnzeige"
     
-    Title="JG Data - Datev Export" x:Name="RibbonWindow" Width="793" Height="480" Loaded="RibbonWindow_Loaded" Icon="JgExport.ico" WindowStartupLocation="CenterScreen">
+    Title="JgDatev Export" x:Name="RibbonWindow" Width="793" Height="520" Loaded="RibbonWindow_Loaded" Icon="JgExport.ico" WindowStartupLocation="CenterScreen">
 
     <RibbonWindow.Resources>
         <CollectionViewSource x:Key="vsDaten" d:DesignSource="{d:DesignInstance {x:Type JgDatevExportLib:DsListeAnzeige}, CreateList=True}"/>
@@ -39,7 +39,7 @@
                     <RibbonApplicationMenuItem Header="BelegInfo anzeigen" Command="{x:Static local:MyCommands.BelegInformationAnzeigen}" ImageSource="Bilder\JgCopy.ico" />
                     <RibbonApplicationMenuItem Header="ZusatzInfo anzeigen" Command="{x:Static local:MyCommands.ZusatzInformationAnzeigen}" ImageSource="Bilder\JgCopy.ico" />
                     <RibbonSeparator/>
-                    <RibbonApplicationMenuItem Header="Daten laden" Command="{x:Static local:MyCommands.Laden}" ImageSource="Bilder\JgNew.ico" />
+                    <RibbonApplicationMenuItem Header="Optionen" Command="{x:Static local:MyCommands.DatevOptionen}" ImageSource="Bilder\JgSettings.ico"/>
                     <RibbonApplicationMenuItem Header="Daten speichern" Command="{x:Static local:MyCommands.Speichern}" ImageSource="Bilder\JgSave.ico" />
 
                 </RibbonApplicationMenu>
@@ -53,7 +53,6 @@
                     <RibbonButton Label="Zusatz Information" Command="{x:Static local:MyCommands.ZusatzInformationAnzeigen}" LargeImageSource="Bilder\JgCopy.ico"/>
                 </RibbonGroup>
                 <RibbonGroup Header="Aktualisieren">
-                    <RibbonButton Label="Laden" Command="{x:Static local:MyCommands.Laden}" LargeImageSource="Bilder\JgNew.ico"/>
                     <RibbonButton Label="Speichern" Command="{x:Static local:MyCommands.Speichern}" LargeImageSource="Bilder\JgSave.ico"/>
                     <RibbonButton Label="Optionen" Command="{x:Static local:MyCommands.DatevOptionen}" LargeImageSource="Bilder\JgSettings.ico"/>
                 </RibbonGroup>

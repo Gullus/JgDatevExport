@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:JgDatevExportLib="clr-namespace:JgDatevExportLib;assembly=JgDatevExportLib" x:Class="JgDatevExportAnzeige.FormEditZusatzInfo"
         mc:Ignorable="d"
-        Title="Jg DatevExport - Zusatzinformationen" Height="300" Width="497" Loaded="Window_Loaded" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Icon="JgExport.ico">
+        Title="JgDatev Export - Zusatzinformationen" Height="300" Width="497" Loaded="Window_Loaded" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Icon="JgExport.ico">
     
     <Window.Resources>
         <CollectionViewSource x:Key="vsZusatzInfo" d:DesignSource="{d:DesignInstance {x:Type JgDatevExportLib:DsZusatzInformation}, CreateList=True}"/>
@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
         <DataGrid RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,0,0,5" ItemsSource="{Binding}" EnableRowVirtualization="True" Grid.ColumnSpan="2" AutoGenerateColumns="False" GridLinesVisibility="Vertical" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" VerticalGridLinesBrush="LightGray" AlternatingRowBackground="#FFE2E2E2">

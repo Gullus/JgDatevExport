@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Jg DatevExport - Feldzuordnung" Height="222.735" Width="488.843" ShowInTaskbar="False" 
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Icon="JgExport.ico">
+        Title="JgDatev Export - Feldzuordnung" Height="211.735" Width="485.843" ShowInTaskbar="False" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="JgExport.ico">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -26,7 +26,6 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="10"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="60"/>
@@ -37,10 +36,10 @@
         <Label Content="Feldname" Grid.Row="1"/>
         <TextBlock x:Name="tblFeldname" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Background="LightGray"/>
 
-        <Label Content="Vorgabewert" FontWeight="Bold" Grid.Row="3" />
-        <ComboBox x:Name="cbFeldVorgabe" Grid.Column="1" Grid.Row="3" Margin="3" Grid.ColumnSpan="2"/>
+        <Label Content="Vorgabewert" FontWeight="Bold" Grid.Row="2" />
+        <ComboBox x:Name="cbFeldVorgabe" Grid.Column="1" Grid.Row="2" Margin="3" Grid.ColumnSpan="2"/>
 
-        <Button Grid.Column="2" Grid.Row="5" Margin="3" Click="Click_Fertig">
+        <Button Grid.Column="2" Grid.Row="4" Margin="3" Click="Click_Fertig">
             <StackPanel Orientation="Horizontal">
                 <Image Source="Bilder\JgCheck.ico" Height="20" />
                 <TextBlock Margin="5">Fertig</TextBlock>

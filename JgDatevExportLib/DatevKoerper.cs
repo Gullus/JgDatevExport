@@ -121,6 +121,9 @@ namespace JgDatevExportLib
         [NonSerialized]
         public DatevOptionen DvOptionen = null;
 
+        [NonSerialized]
+        public bool IstEingangsrechnung = false;  // Null ist keine Rechnung
+
         public DatevKoerper()
         {
             FelderArrayMitNummerUndFeldBelegen();
@@ -148,7 +151,7 @@ namespace JgDatevExportLib
 
         // Felder Zuordnung Programm -> DatevExport speichern
 
-        public string FelderZuordnungDatevExport = ""; 
+        public string FelderZuordnungDatevExport = "";
 
         // Umsatz(ohne Soll/Haben-Kz)
 
@@ -862,13 +865,17 @@ namespace JgDatevExportLib
             var sb = new StringBuilder();
 
             sb.Append(this.JgDruck(v => v._Umsatz) + ";");
+
+            if (DvOptionen.SollHabenTauschen)
+                _SollHaben = _SollHaben == EnumSollHaben.Soll ? EnumSollHaben.Haben : EnumSollHaben.Soll;
             sb.Append(this.JgDruck(v => v._SollHaben) + ";");
+
             sb.Append(this.JgDruck(v => v._WkzUmsatz) + ";");
             sb.Append(this.JgDruck(v => v._Kurs) + ";");
             sb.Append(this.JgDruck(v => v._BasisUmsatz) + ";");
             sb.Append(this.JgDruck(v => v._WkzBasisUmsatz) + ";");
-            sb.Append(this.JgDruck(v => v._Konto, DvOptionen.FormatKontonummer) + ";");
-            sb.Append(this.JgDruck(v => v._GegenKonto, DvOptionen.FormatGegenkonto) + ";");
+            sb.Append(this.JgDruck(v => v._Konto, IstEingangsrechnung ?  DvOptionen.FormatKontonummerEingangsrechnung : DvOptionen.FormatKontonummerAusgangsrechnung) + ";");
+            sb.Append(this.JgDruck(v => v._GegenKonto, IstEingangsrechnung ? DvOptionen.FormatGegenkontoEingangsrechnung : DvOptionen.FormatGegenkontoAusgangsrechnung) + ";");
             sb.Append(this.JgDruck(v => v._BuSchluessel) + ";");
             sb.Append(this.JgDruck(v => v._Belegdatum) + ";");
             sb.Append(this.JgDruck(v => v._Belegfeld1) + ";");
@@ -935,70 +942,69 @@ namespace JgDatevExportLib
 
         public List<DsListeAnzeige> ListeAnzeigeKoerperErstellen()
         {
-            var lAnzeige = new List<DsListeAnzeige>();
-
-            lAnzeige.Add(this.JgAnzeige(v => v._Umsatz));
-            lAnzeige.Add(this.JgAnzeige(v => v._SollHaben));
-            lAnzeige.Add(this.JgAnzeige(v => v._WkzUmsatz));
-            lAnzeige.Add(this.JgAnzeige(v => v._Kurs));
-            lAnzeige.Add(this.JgAnzeige(v => v._BasisUmsatz));
-            lAnzeige.Add(this.JgAnzeige(v => v._WkzBasisUmsatz));
-            lAnzeige.Add(this.JgAnzeige(v => v._Konto));
-            lAnzeige.Add(this.JgAnzeige(v => v._GegenKonto));
-            lAnzeige.Add(this.JgAnzeige(v => v._BuSchluessel));
-            lAnzeige.Add(this.JgAnzeige(v => v._Belegdatum));
-            lAnzeige.Add(this.JgAnzeige(v => v._Belegfeld1));
-            lAnzeige.Add(this.JgAnzeige(v => v._Belegfeld2));
-            lAnzeige.Add(this.JgAnzeige(v => v._Skonto));
-            lAnzeige.Add(this.JgAnzeige(v => v._Buchungstext));
-            lAnzeige.Add(this.JgAnzeige(v => v._PostenSperre));
-            lAnzeige.Add(this.JgAnzeige(v => v._DiverseAdressNummer));
-            lAnzeige.Add(this.JgAnzeige(v => v._GeschäftspartnerBank));
-            lAnzeige.Add(this.JgAnzeige(v => v._Sachverhalt));
-            lAnzeige.Add(this.JgAnzeige(v => v._Zinssperre));
-            lAnzeige.Add(this.JgAnzeige(v => v._BelegLink)); ;
-
-            lAnzeige.Add(this.JgAnzeige(v => v._Kost1));
-            lAnzeige.Add(this.JgAnzeige(v => v._Kost2));
-            lAnzeige.Add(this.JgAnzeige(v => v._KostMenge));
-            lAnzeige.Add(this.JgAnzeige(v => v._EuMitgliedsStaatUStId));
-            lAnzeige.Add(this.JgAnzeige(v => v._EuSteuersatz));
-            lAnzeige.Add(this.JgAnzeige(v => v._AbwVersteuerungsart));
-            lAnzeige.Add(this.JgAnzeige(v => v._Sachverhalt_L_L));
-            lAnzeige.Add(this.JgAnzeige(v => v._FunktionsErgänzung_L_L));
-            lAnzeige.Add(this.JgAnzeige(v => v._Bu49Hauptfunktionstyp));
-            lAnzeige.Add(this.JgAnzeige(v => v._Bu49Hauptfunktionsnummer));
-            lAnzeige.Add(this.JgAnzeige(v => v._Bu49Funktionsergänzung)); ;
-
-            lAnzeige.Add(this.JgAnzeige(v => v._Stueck));
-            lAnzeige.Add(this.JgAnzeige(v => v._Gewicht));
-            lAnzeige.Add(this.JgAnzeige(v => v._Zahlweise));
-            lAnzeige.Add(this.JgAnzeige(v => v._ForderungsArt));
-            lAnzeige.Add(this.JgAnzeige(v => v._Veranlagungsjahr));
-            lAnzeige.Add(this.JgAnzeige(v => v._ZugeordneteFaelligkeit));
-            lAnzeige.Add(this.JgAnzeige(v => v._SkontoType));
-            lAnzeige.Add(this.JgAnzeige(v => v._Auftragsnummer));
-            lAnzeige.Add(this.JgAnzeige(v => v._BuchungsTyp));
-            lAnzeige.Add(this.JgAnzeige(v => v._UstSchluesselAnzahlungen));
-            lAnzeige.Add(this.JgAnzeige(v => v._EuMitgliedstaatAnzahlungen));
-            lAnzeige.Add(this.JgAnzeige(v => v._Sachverhalt_L_L_Anzahlungen));
-            lAnzeige.Add(this.JgAnzeige(v => v._EuSteuersatzAnzahlungen));
-            lAnzeige.Add(this.JgAnzeige(v => v._ErloeskontoAnzahlungen));
-            lAnzeige.Add(this.JgAnzeige(v => v._HerkunftKfz));
-            lAnzeige.Add(this.JgAnzeige(v => v._Leerfeld));
-            lAnzeige.Add(this.JgAnzeige(v => v._KostDatum));
-            lAnzeige.Add(this.JgAnzeige(v => v._SepaMandatsreferenz));
-            lAnzeige.Add(this.JgAnzeige(v => v._Skontosperre));
-            lAnzeige.Add(this.JgAnzeige(v => v._GesellschafterName));
-            lAnzeige.Add(this.JgAnzeige(v => v._BeteiligtenNummer));
-            lAnzeige.Add(this.JgAnzeige(v => v._IdentifikationsNummer));
-            lAnzeige.Add(this.JgAnzeige(v => v._ZeichnerNummer));
-            lAnzeige.Add(this.JgAnzeige(v => v._PostensperreBis));
-            lAnzeige.Add(this.JgAnzeige(v => v._BezeichnungSoBilSachverhalt));
-            lAnzeige.Add(this.JgAnzeige(v => v._KennzeichenSoBilBuchung));
-            lAnzeige.Add(this.JgAnzeige(v => v._Festschreibung));
-            lAnzeige.Add(this.JgAnzeige(v => v._Leistungsdatum));
-            lAnzeige.Add(this.JgAnzeige(v => v._DatumZuordnungSteuerperiode));
+            var lAnzeige = new List<DsListeAnzeige>
+            {
+                this.JgAnzeige(v => v._Umsatz),
+                this.JgAnzeige(v => v._SollHaben),
+                this.JgAnzeige(v => v._WkzUmsatz),
+                this.JgAnzeige(v => v._Kurs),
+                this.JgAnzeige(v => v._BasisUmsatz),
+                this.JgAnzeige(v => v._WkzBasisUmsatz),
+                this.JgAnzeige(v => v._Konto),
+                this.JgAnzeige(v => v._GegenKonto),
+                this.JgAnzeige(v => v._BuSchluessel),
+                this.JgAnzeige(v => v._Belegdatum),
+                this.JgAnzeige(v => v._Belegfeld1),
+                this.JgAnzeige(v => v._Belegfeld2),
+                this.JgAnzeige(v => v._Skonto),
+                this.JgAnzeige(v => v._Buchungstext),
+                this.JgAnzeige(v => v._PostenSperre),
+                this.JgAnzeige(v => v._DiverseAdressNummer),
+                this.JgAnzeige(v => v._GeschäftspartnerBank),
+                this.JgAnzeige(v => v._Sachverhalt),
+                this.JgAnzeige(v => v._Zinssperre),
+                this.JgAnzeige(v => v._BelegLink),
+                this.JgAnzeige(v => v._Kost1),
+                this.JgAnzeige(v => v._Kost2),
+                this.JgAnzeige(v => v._KostMenge),
+                this.JgAnzeige(v => v._EuMitgliedsStaatUStId),
+                this.JgAnzeige(v => v._EuSteuersatz),
+                this.JgAnzeige(v => v._AbwVersteuerungsart),
+                this.JgAnzeige(v => v._Sachverhalt_L_L),
+                this.JgAnzeige(v => v._FunktionsErgänzung_L_L),
+                this.JgAnzeige(v => v._Bu49Hauptfunktionstyp),
+                this.JgAnzeige(v => v._Bu49Hauptfunktionsnummer),
+                this.JgAnzeige(v => v._Bu49Funktionsergänzung),
+                this.JgAnzeige(v => v._Stueck),
+                this.JgAnzeige(v => v._Gewicht),
+                this.JgAnzeige(v => v._Zahlweise),
+                this.JgAnzeige(v => v._ForderungsArt),
+                this.JgAnzeige(v => v._Veranlagungsjahr),
+                this.JgAnzeige(v => v._ZugeordneteFaelligkeit),
+                this.JgAnzeige(v => v._SkontoType),
+                this.JgAnzeige(v => v._Auftragsnummer),
+                this.JgAnzeige(v => v._BuchungsTyp),
+                this.JgAnzeige(v => v._UstSchluesselAnzahlungen),
+                this.JgAnzeige(v => v._EuMitgliedstaatAnzahlungen),
+                this.JgAnzeige(v => v._Sachverhalt_L_L_Anzahlungen),
+                this.JgAnzeige(v => v._EuSteuersatzAnzahlungen),
+                this.JgAnzeige(v => v._ErloeskontoAnzahlungen),
+                this.JgAnzeige(v => v._HerkunftKfz),
+                this.JgAnzeige(v => v._Leerfeld),
+                this.JgAnzeige(v => v._KostDatum),
+                this.JgAnzeige(v => v._SepaMandatsreferenz),
+                this.JgAnzeige(v => v._Skontosperre),
+                this.JgAnzeige(v => v._GesellschafterName),
+                this.JgAnzeige(v => v._BeteiligtenNummer),
+                this.JgAnzeige(v => v._IdentifikationsNummer),
+                this.JgAnzeige(v => v._ZeichnerNummer),
+                this.JgAnzeige(v => v._PostensperreBis),
+                this.JgAnzeige(v => v._BezeichnungSoBilSachverhalt),
+                this.JgAnzeige(v => v._KennzeichenSoBilBuchung),
+                this.JgAnzeige(v => v._Festschreibung),
+                this.JgAnzeige(v => v._Leistungsdatum),
+                this.JgAnzeige(v => v._DatumZuordnungSteuerperiode)
+            };
 
             var zaehler = 0;
             foreach (var ds in lAnzeige)

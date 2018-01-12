@@ -11,50 +11,61 @@ namespace TestConsole
 
             static void Main(string[] args)
             {
-                try
-                {
-                    var pfad = DatevHelper.PfadProgramm();
+                var ss = "";
+                var erg = ss.Split(new char[] { ';' }, StringSplitOptions.None);
 
-                    var erst = new DatevExportErstellen(pfad, "Buch_1");
+                Console.WriteLine(erg.Length);
 
-                    erst.DatevHeader.DatumVon = DateTime.Now.AddDays(-1);
-                    erst.DatevHeader.DatumBis = DateTime.Now.AddDays(1);
+                if (erg[0].Trim() == "")
+                    Console.WriteLine("ist leer");
 
-                    erst.DatevHeader.ErzeugtAm = DateTime.Now;
-                    erst.DatevHeader.DiktatKürzel = "JG";
-
-                    erst.DatevKoerper.Umsatz = 47363.456m;
-
-                    Console.WriteLine(erst.DatevKoerper.Umsatz);
+                Console.ReadKey();
 
 
-                    for (int i = 0; i < 5; i++)
-                    {
+                //try
+                //{
+                //    var pfad = DatevHelper.PfadProgramm();
 
-                        erst.DatevKoerper.SollHaben = EnumSollHaben.Soll;
-                        erst.SetzeWert(DatevEnum.EnumFelderZuordnung.Kontonummer, "1234");
+                //    var erst = new DatevExportErstellen(pfad, "Buch_1");
 
-                        erst.SetzeWert(DatevEnum.EnumFelderZuordnung.Gegenkonto, "4321");
-                        erst.SetzeWert(DatevEnum.EnumFelderZuordnung.Belegdatum, DateTime.Now.ToString());
+                //    erst.DatevHeader.DatumVon = DateTime.Now.AddDays(-1);
+                //    erst.DatevHeader.DatumBis = DateTime.Now.AddDays(1);
 
-                        erst.SetzeWert(EnumFelderZuordnung.Belegnummer, "123" + i.ToString());
+                //    erst.DatevHeader.ErzeugtAm = DateTime.Now;
+                //    erst.DatevHeader.DiktatKürzel = "JG";
 
-                        double ddd = 485541.2587;
-                        erst.SetzeWert(EnumFelderZuordnung.NettoBetrag, ddd);
+                //    erst.DatevKoerper.Umsatz = 47363.456m;
 
-                        ddd = 565764.487;
-                        erst.SetzeWert(EnumFelderZuordnung.Menge, ddd);
+                //    Console.WriteLine(erst.DatevKoerper.Umsatz);
 
-                        erst.SchreibeDatensatz();
-                    }
 
-                    erst.SchreibeInDatei();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Console.ReadKey();
-                }
+                //    for (int i = 0; i < 5; i++)
+                //    {
+
+                //        erst.DatevKoerper.SollHaben = EnumSollHaben.Soll;
+                //        erst.SetzeWert(DatevEnum.EnumFelderZuordnung.Kontonummer, "1234");
+
+                //        erst.SetzeWert(DatevEnum.EnumFelderZuordnung.Gegenkonto, "4321");
+                //        erst.SetzeWert(DatevEnum.EnumFelderZuordnung.Belegdatum, DateTime.Now.ToString());
+
+                //        erst.SetzeWert(EnumFelderZuordnung.Belegnummer, "123" + i.ToString());
+
+                //        double ddd = 485541.2587;
+                //        erst.SetzeWert(EnumFelderZuordnung.NettoBetrag, ddd);
+
+                //        ddd = 565764.487;
+                //        erst.SetzeWert(EnumFelderZuordnung.Menge, ddd);
+
+                //        erst.SchreibeDatensatz();
+                //    }
+
+                //    erst.SchreibeInDatei();
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine(ex.Message);
+                //    Console.ReadKey();
+                //}
             }
         }
     }

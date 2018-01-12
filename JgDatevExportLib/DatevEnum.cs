@@ -195,7 +195,7 @@ namespace JgDatevExportLib
             Kost_2_Bezeichnung,
             Rechn_BelegNummer,     // Bei Eingangsrechnung Rechungsnummer, bei Ausgangsrechnung Belegnummer
             Rechn_BelegDatum,
-            Faellig_ddMMyyyy
+            Faellig_ddMMyy
         }
     }
 }

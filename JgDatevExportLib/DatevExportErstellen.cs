@@ -122,15 +122,53 @@ namespace JgDatevExportLib
                         break;
                 }
 
-                if (enc == null)
-                    File.WriteAllText(datName, sb.ToString(), Encoding.Default);
-                else
-                    File.WriteAllText(datName, sb.ToString(), enc);
+                try
+                {
+                    if (enc == null)
+                        File.WriteAllText(datName, sb.ToString(), Encoding.Default);
+                    else
+                        File.WriteAllText(datName, sb.ToString(), enc);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Fehler bei speichern der Datei '{datName}'.\nGrund: {ex.Message}", ex);
+                }
 
+                if (_DatevOptionen.BackUpDateiAnlegen)
+                {
+                    var pfadTemp = _Pfad + @"\Sicherung";
+                    DirectoryInfo dirInfo = null;
+
+                    if (!Directory.Exists(pfadTemp))
+                    {
+                        try
+                        {
+                            dirInfo = Directory.CreateDirectory(pfadTemp);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception($"Update Verzeichniss konnte nicht erstellt werden. ({pfadTemp})\nGrund: {ex.Message}", ex);
+                        }
+                    }
+
+                    var datTemp = DateinameAusgabe(pfadTemp, _DatName);
+
+                    try
+                    {
+                        if (enc == null)
+                            File.WriteAllText(datTemp, sb.ToString(), Encoding.Default);
+                        else
+                            File.WriteAllText(datTemp, sb.ToString(), enc);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"BackUp Datei konnte nicht gespeichert werden. ({datName})\nGrund: {ex.Message}", ex);
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Fehler bei speichern der Datei '{datName}'. \nGrund: {ex.Message}", "Fehler !", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Fehler !", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

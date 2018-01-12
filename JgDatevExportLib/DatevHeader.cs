@@ -276,9 +276,9 @@ namespace JgDatevExportLib
             sb.Append(this.JgDruck(v => v._Herkunft) + ";");
             sb.Append(this.JgDruck(v => v._ExportiertVon) + ";");
             sb.Append(this.JgDruck(v => v._ImportiertVon) + ";");
-            sb.Append(this.JgDruck(v => v._BeraterNummer) + ";");
 
-            sb.Append(this.JgDruck(v => v._MandantenNummer, DvOptionen.FormatMandantennummer) + ";");
+            sb.Append(this.JgDruck(v => v._BeraterNummer) + ";");
+            sb.Append(this.JgDruck(v => v._MandantenNummer) + ";");
 
             sb.Append(this.JgDruck(v => v._WjBeginn) + ";");
             sb.Append(this.JgDruck(v => v._SachkontenNummernLaenge) + ";");
@@ -305,34 +305,35 @@ namespace JgDatevExportLib
 
         public List<DsListeAnzeige> ListeAnzeigeErstellen()
         {
-            var lAnzeige = new List<DsListeAnzeige>();
-
-            lAnzeige.Add(this.JgAnzeige(v => v._DatevFormatKz));
-            lAnzeige.Add(this.JgAnzeige(v => v._Versionsnummer));
-            lAnzeige.Add(this.JgAnzeige(v => v._DatenKategorie));
-            lAnzeige.Add(this.JgAnzeige(v => v._FormatName));
-            lAnzeige.Add(this.JgAnzeige(v => v._FormatVersion));
-            lAnzeige.Add(this.JgAnzeige(v => v._ErzeugtAm));
-            lAnzeige.Add(this.JgAnzeige(v => v._Importiert));
-            lAnzeige.Add(this.JgAnzeige(v => v._Herkunft));
-            lAnzeige.Add(this.JgAnzeige(v => v._ExportiertVon));
-            lAnzeige.Add(this.JgAnzeige(v => v._ImportiertVon));
-            lAnzeige.Add(this.JgAnzeige(v => v._BeraterNummer));
-            lAnzeige.Add(this.JgAnzeige(v => v._MandantenNummer));
-            lAnzeige.Add(this.JgAnzeige(v => v._WjBeginn));
-            lAnzeige.Add(this.JgAnzeige(v => v._SachkontenNummernLaenge));
-            lAnzeige.Add(this.JgAnzeige(v => v._DatumVon));
-            lAnzeige.Add(this.JgAnzeige(v => v._DatumBis));
-            lAnzeige.Add(this.JgAnzeige(v => v._Bezeichnung));
-            lAnzeige.Add(this.JgAnzeige(v => v._DiktatKürzel));
-            lAnzeige.Add(this.JgAnzeige(v => v._BuchungsTyp));
-            lAnzeige.Add(this.JgAnzeige(v => v._Rechnungszweck));
-            lAnzeige.Add(this.JgAnzeige(v => v._Festschreibung));
-            lAnzeige.Add(this.JgAnzeige(v => v._WkZ));
-            lAnzeige.Add(this.JgAnzeige(v => v._Derivatskennzeichen));
-            lAnzeige.Add(this.JgAnzeige(v => v._SKR));
-            lAnzeige.Add(this.JgAnzeige(v => v._BranchenloesungId));
-            lAnzeige.Add(this.JgAnzeige(v => v._AnwendungsInformation));
+            var lAnzeige = new List<DsListeAnzeige>
+            {
+                this.JgAnzeige(v => v._DatevFormatKz),
+                this.JgAnzeige(v => v._Versionsnummer),
+                this.JgAnzeige(v => v._DatenKategorie),
+                this.JgAnzeige(v => v._FormatName),
+                this.JgAnzeige(v => v._FormatVersion),
+                this.JgAnzeige(v => v._ErzeugtAm),
+                this.JgAnzeige(v => v._Importiert),
+                this.JgAnzeige(v => v._Herkunft),
+                this.JgAnzeige(v => v._ExportiertVon),
+                this.JgAnzeige(v => v._ImportiertVon),
+                this.JgAnzeige(v => v._BeraterNummer),
+                this.JgAnzeige(v => v._MandantenNummer),
+                this.JgAnzeige(v => v._WjBeginn),
+                this.JgAnzeige(v => v._SachkontenNummernLaenge),
+                this.JgAnzeige(v => v._DatumVon),
+                this.JgAnzeige(v => v._DatumBis),
+                this.JgAnzeige(v => v._Bezeichnung),
+                this.JgAnzeige(v => v._DiktatKürzel),
+                this.JgAnzeige(v => v._BuchungsTyp),
+                this.JgAnzeige(v => v._Rechnungszweck),
+                this.JgAnzeige(v => v._Festschreibung),
+                this.JgAnzeige(v => v._WkZ),
+                this.JgAnzeige(v => v._Derivatskennzeichen),
+                this.JgAnzeige(v => v._SKR),
+                this.JgAnzeige(v => v._BranchenloesungId),
+                this.JgAnzeige(v => v._AnwendungsInformation)
+            };
 
             var id = 1;
             foreach (var ds in lAnzeige)

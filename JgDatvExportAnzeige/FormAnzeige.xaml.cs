@@ -80,6 +80,7 @@ namespace JgDatevExportAnzeige
             {
                 _DatevKoerper.FelderZuordnungDatevExport = _Zuordnung.ToString();
                 DatevHelper.DatenSpeichern(DatevHelper.GetNameConfigDatei(), _DatevHeader, _DatevKoerper, _DatevOptionen);
+                MessageBox.Show("Configuration gespeichert!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }));
 
             CommandBindings.Add(new CommandBinding(MyCommands.Beenden, (sen, erg) =>
